@@ -20,23 +20,31 @@ export const authOptions: NextAuthOptions = {
   events: {
     async createUser({ user }) {
       // Send verification email for new users (OAuth)
-      if (user.email && !user.emailVerified) {
-        const token = crypto.randomBytes(32).toString("hex");
-        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-        
-        await prisma.verificationToken.create({
-          data: {
-            identifier: user.email,
-            token,
-            expires,
-            userId: parseInt(user.id),
-          },
+      if (user.email) {
+        // Check if user already has verified email (from OAuth providers)
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { emailVerified: true },
         });
-        
-        try {
-          await sendVerificationEmail(user.email, token);
-        } catch (error) {
-          console.error("Failed to send verification email:", error);
+
+        if (!dbUser?.emailVerified) {
+          const token = crypto.randomBytes(32).toString("hex");
+          const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+          
+          await prisma.verificationToken.create({
+            data: {
+              identifier: user.email,
+              token,
+              expires,
+              userId: parseInt(user.id),
+            },
+          });
+          
+          try {
+            await sendVerificationEmail(user.email, token);
+          } catch (error) {
+            console.error("Failed to send verification email:", error);
+          }
         }
       }
     },
