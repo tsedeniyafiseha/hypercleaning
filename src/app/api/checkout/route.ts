@@ -50,14 +50,25 @@ export async function POST(request: Request) {
       customer_email: session?.user?.email || undefined,
     });
 
+    // Get user ID from database if logged in
+    let userId: number | undefined;
+    if (session?.user?.email) {
+      const user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { id: true },
+      });
+      userId = user?.id;
+    }
+
     // Use transaction to create order with items atomically
     await prisma.$transaction(async (tx) => {
       await tx.order.create({
         data: {
-          userId: session?.user?.id ? Number(session.user.id) : undefined,
+          userId: userId,
           totalAmount: adjustedTotalPrice,
           stripeSessionId: stripeSession.id,
           currency: "usd",
+          customerEmail: session?.user?.email || undefined,
           items: {
             create: items.map((item) => ({
               productId: item.id,
