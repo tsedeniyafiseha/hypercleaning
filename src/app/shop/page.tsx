@@ -19,6 +19,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+
+export const dynamic = 'force-dynamic';
 import { getAllProducts } from "@/lib/products";
 import type { Metadata } from "next";
 

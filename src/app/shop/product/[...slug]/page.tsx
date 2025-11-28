@@ -7,6 +7,8 @@ import { getAllProducts, getProductById, getRelatedProducts } from "@/lib/produc
 import type { Metadata } from "next";
 import Script from "next/script";
 
+export const dynamic = 'force-dynamic';
+
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 

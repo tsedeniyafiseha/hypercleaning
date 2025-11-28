@@ -3,6 +3,8 @@ import ProductCard from "@/components/common/ProductCard";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+export const dynamic = 'force-dynamic';
+
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
