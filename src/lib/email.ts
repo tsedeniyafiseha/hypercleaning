@@ -1,15 +1,22 @@
 import nodemailer from 'nodemailer';
 import { logger } from './logger';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_PORT === '465',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+let transporter: nodemailer.Transporter | null = null;
+
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_PORT === '465',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+  }
+  return transporter;
+}
 
 export interface OrderConfirmationData {
   orderId: string;
@@ -42,7 +49,7 @@ export async function sendOrderConfirmation(data: OrderConfirmationData) {
       <p>We'll send you tracking information soon.</p>
     `;
 
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: process.env.FROM_EMAIL,
       to: data.customerEmail,
       subject: `Order Confirmation - ${data.orderId}`,
@@ -90,7 +97,7 @@ export async function sendPasswordResetEmail(email: string, token: string) {
       </html>
     `;
 
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: process.env.FROM_EMAIL || 'noreply@hyperclean.com',
       to: email,
       subject: 'Password Reset Request - Hyper Clean Supplies',
@@ -136,7 +143,7 @@ export async function sendVerificationEmail(email: string, token: string) {
       </html>
     `;
 
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: process.env.FROM_EMAIL || 'noreply@hyperclean.com',
       to: email,
       subject: 'Verify Your Email Address - Hyper Clean Supplies',
