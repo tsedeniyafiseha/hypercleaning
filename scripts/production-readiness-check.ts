@@ -340,7 +340,7 @@ function printResults() {
   console.log("🚀 PRODUCTION READINESS CHECK RESULTS");
   console.log("=".repeat(80) + "\n");
 
-  const categories = [...new Set(results.map((r) => r.category))];
+  const categories = Array.from(new Set(results.map((r) => r.category)));
 
   categories.forEach((category) => {
     console.log(`\n📋 ${category}`);
