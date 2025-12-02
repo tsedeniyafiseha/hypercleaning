@@ -1,0 +1,8 @@
+scripts/test-*.ts
+scripts/*-check.ts
+scripts/diagnose-*.ts
+scripts/create-*.ts
+scripts/update-*.ts
+scripts/check-*.ts
+*.md
+!README.md
