@@ -162,7 +162,7 @@ async function testDatabaseOrders() {
       take: 5,
       orderBy: { createdAt: "desc" },
       include: {
-        items: true,
+        OrderItem: true,
       },
     });
 
