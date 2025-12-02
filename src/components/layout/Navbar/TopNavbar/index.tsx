@@ -10,6 +10,8 @@ import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-m
 import { MenuItem } from "./MenuItem";
 import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
+import { useSession, signOut } from "next-auth/react";
+import { LogOut, User, Settings, ShoppingBag } from "lucide-react";
 
 const data: NavMenu = [
   {
@@ -52,6 +54,16 @@ const data: NavMenu = [
 
 const TopNavbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const { data: session } = useSession();
+
+  const handleLogout = async () => {
+    // Clear cart from localStorage before logout
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("persist:root");
+    }
+    await signOut({ callbackUrl: "/" });
+  };
 
   return (
     <nav className="sticky top-0 bg-white z-20 shadow-sm">
@@ -93,15 +105,77 @@ const TopNavbar = () => {
 
           {/* Right Actions */}
           <div className="flex items-center gap-5">
-            <Link href="/signin" className="hidden md:flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <div className="text-left">
-                <span className="text-[10px] text-gray-400 block">ACCOUNT</span>
-                <span className="text-sm font-medium text-gray-800">Log in / Sign in</span>
+            {session ? (
+              <div className="hidden md:block relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <div className="text-left">
+                    <span className="text-[10px] text-gray-400 block">ACCOUNT</span>
+                    <span className="text-sm font-medium text-gray-800">{session.user?.name || session.user?.email}</span>
+                  </div>
+                </button>
+                
+                {showUserMenu && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-10" 
+                      onClick={() => setShowUserMenu(false)}
+                    />
+                    <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-20">
+                      <Link
+                        href="/account"
+                        onClick={() => setShowUserMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        <User className="w-4 h-4" />
+                        My Account
+                      </Link>
+                      <Link
+                        href="/account/orders"
+                        onClick={() => setShowUserMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        <ShoppingBag className="w-4 h-4" />
+                        My Orders
+                      </Link>
+                      {session.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-100"
+                        >
+                          <Settings className="w-4 h-4" />
+                          Admin Dashboard
+                        </Link>
+                      )}
+                      <hr className="my-2 border-gray-100" />
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors w-full text-left"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
-            </Link>
+            ) : (
+              <Link href="/signin" className="hidden md:flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <div className="text-left">
+                  <span className="text-[10px] text-gray-400 block">ACCOUNT</span>
+                  <span className="text-sm font-medium text-gray-800">Log in / Sign in</span>
+                </div>
+              </Link>
+            )}
             <Link href="/wishlist" className="hidden md:flex items-center text-gray-600 hover:text-gray-800 relative">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />

@@ -37,7 +37,7 @@ const Header = () => {
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Main Hero - Carousel */}
-          <div className="lg:col-span-2 relative rounded-2xl overflow-hidden min-h-[450px] bg-gradient-to-r from-amber-50 via-orange-50 to-white">
+          <div className="lg:col-span-2 relative rounded-2xl overflow-hidden min-h-[450px] bg-gradient-to-r from-amber-50 via-orange-50 to-white border-2 border-gray-200 shadow-lg">
             {heroSlides.map((slide, index) => (
               <div
                 key={index}
@@ -51,6 +51,7 @@ const Header = () => {
                     src={slide.image}
                     alt={slide.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-contain object-right"
                     priority={index === 0}
                   />
@@ -105,9 +106,10 @@ const Header = () => {
           {/* Right Side - 2 Cards */}
           <div className="flex flex-col gap-4">
             {/* Card 1 */}
-            <div className="relative rounded-2xl overflow-hidden h-[217px] bg-gradient-to-r from-white to-sky-50">
+            <div className="relative rounded-2xl overflow-hidden h-[217px] bg-gradient-to-r from-white to-sky-50 border-2 border-gray-200 shadow-lg">
               <div className="absolute right-0 top-0 w-1/2 h-full">
-                <Image src="/images/products/cleaner1.jpg" alt="Chemicals" fill className="object-contain" />
+                <Image src="/images/products/cleaner1.jpg" alt="Chemicals" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
+                <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-white/60" />
               </div>
               <div className="relative z-10 p-5 h-full flex flex-col justify-center">
                 <p className="text-gray-500 text-xs mb-1">For Superior Results</p>
@@ -119,9 +121,10 @@ const Header = () => {
             </div>
 
             {/* Card 2 */}
-            <div className="relative rounded-2xl overflow-hidden h-[217px] bg-gradient-to-r from-white to-cyan-50">
+            <div className="relative rounded-2xl overflow-hidden h-[217px] bg-gradient-to-r from-white to-cyan-50 border-2 border-gray-200 shadow-lg">
               <div className="absolute right-0 top-0 w-1/2 h-full">
-                <Image src="/images/products/gloves.jpg" alt="Gloves" fill className="object-contain" />
+                <Image src="/images/products/gloves.jpg" alt="Gloves" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
+                <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/20 to-white/60" />
               </div>
               <div className="relative z-10 p-5 h-full flex flex-col justify-center">
                 <p className="text-gray-500 text-xs mb-1">Superior Protection and Durability</p>

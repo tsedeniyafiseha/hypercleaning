@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { trackBeginCheckout } from "@/lib/analytics";
+import Footer from "@/components/layout/Footer";
 
 export default function CartPage() {
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
@@ -28,11 +29,6 @@ export default function CartPage() {
 
   const handleCheckout = async () => {
     setError("");
-
-    if (!session) {
-      router.push("/signin");
-      return;
-    }
 
     if (!cart || cart.items.length === 0) {
       setError("Your cart is empty");
@@ -50,31 +46,9 @@ export default function CartPage() {
         })),
         adjustedTotalPrice
       );
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items: cart.items.map((item) => ({
-            id: item.id,
-            name: item.name,
-            srcUrl: item.srcUrl,
-            price: item.price,
-            quantity: item.quantity,
-          })),
-          adjustedTotalPrice,
-        }),
-      });
 
-      const data = await res.json();
-
-      if (!res.ok || !data.url) {
-        setError(data.error || "Failed to start checkout");
-        return;
-      }
-
-      window.location.href = data.url;
+      // Redirect to checkout page to collect shipping info
+      router.push("/checkout");
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Please try again.");
@@ -160,16 +134,17 @@ export default function CartPage() {
                   </InputGroup>
                   <Button
                     type="button"
-                    className="bg-black hover:bg-gray-800 rounded-full w-full max-w-[119px] h-[48px]"
+                    className="bg-sky-500 hover:bg-sky-600 rounded-full w-full max-w-[119px] h-[48px]"
                   >
                     Apply
                   </Button>
                 </div>
+
                 <Button
                   type="button"
                   onClick={handleCheckout}
                   disabled={loading}
-                  className="text-sm md:text-base font-medium bg-black hover:bg-gray-800 rounded-full w-full py-4 h-[54px] md:h-[60px] group disabled:opacity-60"
+                  className="text-sm md:text-base font-medium bg-sky-500 hover:bg-sky-600 rounded-full w-full py-4 h-[54px] md:h-[60px] group disabled:opacity-60"
                 >
                   {loading ? "Redirecting..." : "Go to Checkout"}{" "}
                   <FaArrowRight className="text-xl ml-2 group-hover:translate-x-1 transition-all" />
@@ -187,6 +162,7 @@ export default function CartPage() {
           </div>
         )}
       </div>
+      <Footer showNewsletter={false} />
     </main>
   );
 }

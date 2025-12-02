@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { Slider } from "@/components/ui/slider";
 
 const categories = [
   { title: "Cleaning Chemicals", slug: "cleaning-chemicals", count: 24 },
@@ -53,12 +52,7 @@ const FilterSection = ({ title, defaultOpen = true, children }: FilterSectionPro
 const Filters = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [priceRange, setPriceRange] = React.useState<[number, number]>([0, 300]);
   const [selectedBrands, setSelectedBrands] = React.useState<string[]>([]);
-
-  const handlePriceChange = (values: number[]) => {
-    setPriceRange([values[0], values[1]]);
-  };
 
   const handleBrandToggle = (brandName: string) => {
     setSelectedBrands(prev => 
@@ -70,10 +64,6 @@ const Filters = () => {
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams.toString());
-    
-    // Add price filters
-    if (priceRange[0] > 0) params.set('minPrice', priceRange[0].toString());
-    if (priceRange[1] < 300) params.set('maxPrice', priceRange[1].toString());
     
     // Add brand filters
     if (selectedBrands.length > 0) {
@@ -87,21 +77,6 @@ const Filters = () => {
 
   return (
     <div className="space-y-0">
-      <FilterSection title="Price">
-        <Slider 
-          defaultValue={[0, 300]} 
-          min={0} 
-          max={300} 
-          step={5} 
-          label="$"
-          onValueChange={handlePriceChange}
-        />
-        <div className="flex items-center justify-between mt-3 text-sm text-gray-500">
-          <span>$0</span>
-          <span>$300+</span>
-        </div>
-      </FilterSection>
-
       <FilterSection title="Brand">
         <div className="space-y-2">
           {brands.map((brand, idx) => (

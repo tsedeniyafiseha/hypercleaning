@@ -20,14 +20,20 @@ export async function GET(
     const productId = parseInt(params.id);
     const product = await prisma.product.findUnique({
       where: { id: productId },
-      include: { category: true },
+      include: { Category: true },
     });
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
-    return NextResponse.json(product);
+    // Convert Decimal to number for JSON serialization
+    const productData = {
+      ...product,
+      price: Number(product.price),
+    };
+
+    return NextResponse.json(productData);
   } catch (error) {
     logger.error("Failed to fetch admin product", error as Error, { endpoint: "GET /api/admin/products/:id", productId: params.id });
     return NextResponse.json(
@@ -80,7 +86,7 @@ export async function PUT(
         description: description ?? null,
         price,
         imageUrl,
-        gallery: gallery ?? null,
+        gallery: gallery ?? [],
         categoryId: categoryId ?? null,
         discountAmount: discountAmount ?? 0,
         discountPercentage: discountPercentage ?? 0,
@@ -89,7 +95,13 @@ export async function PUT(
       },
     });
 
-    return NextResponse.json(updated);
+    // Convert Decimal to number for JSON serialization
+    const updatedData = {
+      ...updated,
+      price: Number(updated.price),
+    };
+
+    return NextResponse.json(updatedData);
   } catch (error) {
     logger.error("Failed to update admin product", error as Error, { endpoint: "PUT /api/admin/products/:id", productId: params.id });
     return NextResponse.json(

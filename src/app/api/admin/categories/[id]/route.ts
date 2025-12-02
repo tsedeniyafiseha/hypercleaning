@@ -20,7 +20,7 @@ export async function GET(
     const categoryId = parseInt(params.id);
     const category = await prisma.category.findUnique({
       where: { id: categoryId },
-      include: { _count: { select: { products: true } } },
+      include: { _count: { select: { Product: true } } },
     });
 
     if (!category) {

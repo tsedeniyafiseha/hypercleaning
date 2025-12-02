@@ -4,6 +4,8 @@ import Header from "@/components/homepage/Header";
 import Sidebar from "@/components/homepage/Sidebar";
 import BrowseByCategory from "@/components/homepage/BrowseByCategory";
 import Reviews from "@/components/homepage/Reviews";
+import Footer from "@/components/layout/Footer";
+import AdminRedirect from "@/components/homepage/AdminRedirect";
 import { getAllProducts } from "@/lib/products";
 import { reviewsData } from "@/data/reviews";
 
@@ -16,6 +18,7 @@ export default async function Home() {
 
   return (
     <div className="bg-white min-h-screen">
+      <AdminRedirect />
       <Header />
       <BrowseByCategory />
       <Brands />
@@ -40,6 +43,7 @@ export default async function Home() {
       <div className="py-12 bg-white">
         <Reviews data={reviewsData} />
       </div>
+      <Footer showNewsletter={true} />
     </div>
   );
 }

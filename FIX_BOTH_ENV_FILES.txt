@@ -1,0 +1,34 @@
+==========================================
+FIX FOR BOTH .env AND .env.local FILES
+==========================================
+
+Both files are using aws-0, but your project uses aws-1.
+
+UPDATE BOTH FILES with these lines:
+
+==========================================
+FOR .env FILE (replace lines 1-2):
+==========================================
+
+DATABASE_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.supabase.com:5432/postgres"
+DIRECT_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.supabase.com:5432/postgres"
+
+
+==========================================
+FOR .env.local FILE (replace lines 3-4):
+==========================================
+
+DATABASE_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.supabase.com:5432/postgres"
+DIRECT_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.supabase.com:5432/postgres"
+
+
+==========================================
+KEY CHANGE:
+==========================================
+
+Change: aws-0 → aws-1
+Keep: Port 5432 (direct connection)
+Keep: Everything else the same
+
+==========================================
+

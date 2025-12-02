@@ -9,6 +9,10 @@ import Image from "next/image";
 import NewsLetterSection from "./NewsLetterSection";
 import LayoutSpacing from "./LayoutSpacing";
 
+interface FooterProps {
+  showNewsletter?: boolean;
+}
+
 const socialsData: SocialNetworks[] = [
   {
     id: 1,
@@ -55,16 +59,18 @@ const paymentBadgesData: PaymentBadge[] = [
   },
 ];
 
-const Footer = () => {
+const Footer: React.FC<FooterProps> = ({ showNewsletter = false }) => {
   return (
     <footer className="mt-10">
-      <div className="relative">
-        <div className="absolute bottom-0 w-full h-1/2 bg-[#F0F0F0]"></div>
-        <div className="px-4">
-          <NewsLetterSection />
+      {showNewsletter && (
+        <div className="relative">
+          <div className="absolute bottom-0 w-full h-1/2 bg-[#F0F0F0]"></div>
+          <div className="px-4">
+            <NewsLetterSection />
+          </div>
         </div>
-      </div>
-      <div className="pt-8 md:pt-[50px] bg-[#F0F0F0] px-4 pb-4">
+      )}
+      <div className={cn("bg-[#F0F0F0] px-4 pb-4", showNewsletter ? "pt-8 md:pt-[50px]" : "pt-10")}>
         <div className="max-w-frame mx-auto">
           <nav className="lg:grid lg:grid-cols-12 mb-8">
             <div className="flex flex-col lg:col-span-3 lg:max-w-[248px]">
@@ -118,9 +124,9 @@ const Footer = () => {
                     priority
                     src={badge.srcUrl}
                     width={33}
-                    height={100}
-                    alt="user"
-                    className="max-h-[15px]"
+                    height={15}
+                    alt="payment method"
+                    className="w-auto h-auto max-h-[15px]"
                   />
                 </span>
               ))}

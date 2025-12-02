@@ -87,6 +87,7 @@ const DressStyle = () => {
                   src={category.image}
                   alt={category.title}
                   fill
+                  sizes="96px"
                   className="object-contain p-2 group-hover:scale-110 transition-transform duration-300"
                 />
               </div>

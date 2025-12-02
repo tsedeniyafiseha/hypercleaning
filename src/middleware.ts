@@ -32,10 +32,9 @@ export async function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-request-id', requestId);
 
-  // Rate limiting for API routes
-  if (pathname.startsWith('/api/')) {
-    const limit = pathname.includes('/auth/') ? 10 : 100;
-    if (!rateLimit(ip, limit)) {
+  // Rate limiting for API routes (disabled for auth to prevent session check issues)
+  if (pathname.startsWith('/api/') && !pathname.includes('/auth/')) {
+    if (!rateLimit(ip, 100)) {
       const response = NextResponse.json({ error: 'Too many requests' }, { status: 429 });
       response.headers.set('x-request-id', requestId);
       return response;

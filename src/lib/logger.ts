@@ -16,6 +16,12 @@ interface LogContext {
 
 export class Logger {
   private context: LogContext = {};
+  private sentryEnabled: boolean;
+
+  constructor() {
+    // Check if Sentry is properly initialized
+    this.sentryEnabled = !!process.env.SENTRY_DSN;
+  }
 
   setContext(context: LogContext) {
     this.context = { ...this.context, ...context };
@@ -35,10 +41,18 @@ export class Logger {
       JSON.stringify(logEntry)
     );
 
-    if (level === LogLevel.ERROR) {
-      Sentry.captureException(new Error(message), { extra: { ...logEntry, data } });
-    } else if (level === LogLevel.WARN) {
-      Sentry.captureMessage(message, 'warning');
+    // Only use Sentry if it's enabled and properly configured
+    if (this.sentryEnabled) {
+      try {
+        if (level === LogLevel.ERROR) {
+          Sentry.captureException(new Error(message), { extra: { ...logEntry, data } });
+        } else if (level === LogLevel.WARN) {
+          Sentry.captureMessage(message, 'warning');
+        }
+      } catch (error) {
+        // Silently fail if Sentry has issues
+        console.error('Sentry logging failed:', error);
+      }
     }
   }
 

@@ -1,0 +1,34 @@
+==========================================
+FINAL WORKING CONNECTION STRINGS
+==========================================
+
+Use the ORIGINAL pooler connection that was working:
+(port 6543 with pgbouncer=true)
+
+==========================================
+FOR .env FILE:
+==========================================
+
+DATABASE_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+
+
+==========================================
+FOR .env.local FILE (lines 3-4):
+==========================================
+
+DATABASE_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://postgres.dhfflpixjzwxexvflpzk:NewVersion$1321%25@aws-1-eu-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+
+
+==========================================
+KEY POINTS:
+==========================================
+
+- Port: 6543 (pooler port - this was working)
+- Host: aws-1-eu-west-1.pooler.supabase.com
+- Keep: ?pgbouncer=true parameter
+- This is the ORIGINAL format that was working
+
+==========================================
+

@@ -122,7 +122,7 @@ async function main() {
 
   // Create admin user
   console.log('Creating admin user...');
-  const adminPassword = await bcrypt.hash('Admin123!', 10);
+  const adminPassword = await bcrypt.hash('Hyper@Clean2024$Secure!', 10);
   await prisma.user.upsert({
     where: { email: process.env.ADMIN_EMAIL || 'admin@localhost.com' },
     update: {},
@@ -151,7 +151,7 @@ async function main() {
   });
 
   console.log('Database seeded successfully!');
-  console.log('Admin credentials: admin@localhost.com / Admin123!');
+  console.log('Admin credentials: admin@localhost.com / Hyper@Clean2024$Secure!');
   console.log('Test user credentials: test@example.com / Test123!');
 }
 

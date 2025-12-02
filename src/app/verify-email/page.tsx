@@ -60,7 +60,7 @@ export default function VerifyEmailPage() {
             <p className="text-black/60 mb-8">{message}</p>
             <Link
               href="/signin"
-              className="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-black/90"
+              className="inline-block px-6 py-3 bg-sky-500 text-white rounded-full font-medium hover:bg-sky-600"
             >
               Sign In
             </Link>
@@ -78,7 +78,7 @@ export default function VerifyEmailPage() {
             <p className="text-black/60 mb-8">{message}</p>
             <Link
               href="/"
-              className="inline-block px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-black/90"
+              className="inline-block px-6 py-3 bg-sky-500 text-white rounded-full font-medium hover:bg-sky-600"
             >
               Go Home
             </Link>

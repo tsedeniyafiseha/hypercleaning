@@ -43,7 +43,7 @@ const AddToCartBtn = ({ data, disabled }: Props) => {
     <button
       type="button"
       disabled={disabled}
-      className="bg-black hover:bg-gray-800 w-full ml-3 sm:ml-5 rounded-full h-11 md:h-[52px] text-sm sm:text-base text-white transition-all disabled:opacity-60"
+      className="bg-sky-500 hover:bg-sky-600 w-full ml-3 sm:ml-5 rounded-full h-11 md:h-[52px] text-sm sm:text-base text-white transition-all disabled:opacity-60"
       onClick={handleClick}
     >
       {disabled ? "Out of Stock" : "Add to Cart"}

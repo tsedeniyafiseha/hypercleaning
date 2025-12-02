@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "About Us | Hyper Cleaning Supplies",
@@ -55,6 +56,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+      <Footer showNewsletter={false} />
     </main>
   );
 }

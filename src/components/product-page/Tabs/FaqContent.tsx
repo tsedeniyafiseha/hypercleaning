@@ -13,34 +13,34 @@ type FaqItem = {
 
 const faqsData: FaqItem[] = [
   {
-    question: "What is the material of the t-shirt?",
+    question: "What are the product specifications?",
     answer:
-      "Provide details about the fabric type (e.g., cotton, polyester, blend), weight, and any specific features.",
+      "Each product listing includes detailed specifications such as volume, concentration, active ingredients, and recommended usage areas.",
   },
   {
-    question: "What are the care instructions for the t-shirt?",
+    question: "How should I store cleaning products?",
     answer:
-      "Outline recommended washing, drying, and ironing methods to maintain quality and longevity.",
+      "Store in a cool, dry place away from direct sunlight. Keep containers tightly closed and away from children and pets. Follow specific storage instructions on product labels.",
   },
   {
-    question: "What is the design or print on the t-shirt made of?",
+    question: "Are these products safe for commercial use?",
     answer:
-      "Explain the material used for the design (e.g., vinyl, screen print, embroidery) and its durability.",
+      "Yes, all our products meet commercial-grade standards and comply with health and safety regulations. Safety Data Sheets (SDS) are available for all chemical products.",
   },
   {
-    question: "Is the t-shirt unisex or designed for specific genders?",
+    question: "Do you offer bulk discounts?",
     answer:
-      "Indicate whether the shirt is suitable for both men and women or targeted towards a particular gender.",
+      "Yes, we offer competitive bulk pricing for businesses. Contact our sales team or set up a business account for volume discounts and special pricing.",
   },
   {
     question: "What are the shipping options and costs?",
     answer:
-      "Provide information about shipping methods, estimated delivery times, and associated fees.",
+      "We offer standard and express shipping. Free shipping on orders over $299. Delivery times vary by location, typically 2-5 business days for standard shipping.",
   },
   {
-    question: "What is the return policy for the t-shirt?",
+    question: "What is your return policy?",
     answer:
-      "Outline the return window, conditions, and refund or exchange procedures.",
+      "Unopened products can be returned within 30 days of purchase. Due to safety regulations, opened chemical products cannot be returned. See our Returns page for full details.",
   },
 ];
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Blog | Hyper Cleaning Supplies",
@@ -57,6 +58,7 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
+      <Footer showNewsletter={false} />
     </main>
   );
 }

@@ -33,8 +33,8 @@ export async function GET() {
         take: 5,
         orderBy: { createdAt: "desc" },
         include: {
-          user: { select: { name: true, email: true } },
-          items: { select: { name: true, quantity: true } },
+          User: { select: { name: true, email: true } },
+          OrderItem: { select: { name: true, quantity: true } },
         },
       }),
     ]);

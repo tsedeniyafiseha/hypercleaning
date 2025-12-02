@@ -76,6 +76,7 @@ const BrowseByCategory = () => {
                   src={category.image}
                   alt={category.name}
                   fill
+                  sizes="80px"
                   className="object-contain p-2 group-hover:scale-110 transition-transform duration-300"
                 />
               </div>

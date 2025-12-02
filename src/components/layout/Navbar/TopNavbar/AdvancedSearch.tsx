@@ -125,7 +125,7 @@ const AdvancedSearch = () => {
                     onClick={() => handleCategoryClick(category.slug)}
                     className={`flex items-center justify-between py-2 px-2 rounded text-sm transition-colors ${
                       selectedCategory === category.slug
-                        ? "bg-black text-white"
+                        ? "bg-sky-500 text-white"
                         : "text-black/60 hover:bg-gray-100"
                     }`}
                   >
@@ -146,7 +146,7 @@ const AdvancedSearch = () => {
                     onClick={() => handleTypeClick(type.slug)}
                     className={`flex items-center justify-between py-2 px-2 rounded text-sm transition-colors ${
                       selectedType === type.slug
-                        ? "bg-black text-white"
+                        ? "bg-sky-500 text-white"
                         : "text-black/60 hover:bg-gray-100"
                     }`}
                   >
@@ -161,7 +161,7 @@ const AdvancedSearch = () => {
           <div className="mt-4 pt-4 border-t">
             <button
               type="submit"
-              className="w-full bg-black hover:bg-gray-800 text-white rounded-full py-2.5 px-4 text-sm font-medium transition-all"
+              className="w-full bg-sky-500 hover:bg-sky-600 text-white rounded-full py-2.5 px-4 text-sm font-medium transition-all"
             >
               Search
             </button>

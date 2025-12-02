@@ -5,13 +5,41 @@ let transporter: nodemailer.Transporter | null = null;
 
 function getTransporter() {
   if (!transporter) {
+    const host = process.env.SMTP_HOST;
+    const port = process.env.SMTP_PORT;
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+
+    // Validate required SMTP settings
+    if (!host || !port || !user || !pass) {
+      console.error('[Email Error] Missing SMTP configuration:', {
+        host: host ? '✓' : '✗ SMTP_HOST missing',
+        port: port ? '✓' : '✗ SMTP_PORT missing',
+        user: user ? '✓' : '✗ SMTP_USER missing',
+        pass: pass ? '✓' : '✗ SMTP_PASS missing',
+      });
+      throw new Error('SMTP configuration incomplete. Check .env.local');
+    }
+
+    const portNum = parseInt(port);
+
+    // Debug logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Email Config] ✓ SMTP configured:', {
+        host,
+        port: portNum,
+        user: `${user.substring(0, 5)}...`,
+        secure: portNum === 465,
+      });
+    }
+
     transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_PORT === '465',
+      host,
+      port: portNum,
+      secure: portNum === 465,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user,
+        pass,
       },
     });
   }
@@ -113,6 +141,9 @@ export async function sendPasswordResetEmail(email: string, token: string) {
 
 export async function sendVerificationEmail(email: string, token: string) {
   try {
+    // Validate SMTP is configured
+    const transporter = getTransporter();
+    
     // Use NEXT_PUBLIC_SITE_URL or fallback to NEXTAUTH_URL for production
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000';
     const verificationLink = `${baseUrl}/api/auth/verify-email?token=${token}`;
@@ -143,16 +174,17 @@ export async function sendVerificationEmail(email: string, token: string) {
       </html>
     `;
 
-    await getTransporter().sendMail({
+    const result = await transporter.sendMail({
       from: process.env.FROM_EMAIL || 'noreply@hyperclean.com',
       to: email,
       subject: 'Verify Your Email Address - Hyper Clean Supplies',
       html,
     });
 
-    logger.info('Verification email sent', { email });
+    logger.info('Verification email sent successfully', { email, messageId: result.messageId });
   } catch (error) {
-    logger.error('Failed to send verification email', error as Error, { email });
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    logger.error('Failed to send verification email', error as Error, { email, errorMsg });
     throw error;
   }
 }

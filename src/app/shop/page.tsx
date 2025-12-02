@@ -19,6 +19,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Footer from "@/components/layout/Footer";
 
 export const dynamic = 'force-dynamic';
 import { getAllProducts } from "@/lib/products";
@@ -31,8 +32,6 @@ export const metadata: Metadata = {
 };
 
 type SearchParams = {
-  minPrice?: string;
-  maxPrice?: string;
   brands?: string;
   sort?: string;
 };
@@ -44,16 +43,7 @@ export default async function ShopPage({
 }) {
   const allProducts = await getAllProducts();
   
-  // Apply price filters
   let filteredProducts = allProducts;
-  
-  const minPrice = searchParams.minPrice ? parseFloat(searchParams.minPrice) : 0;
-  const maxPrice = searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : Infinity;
-  
-  filteredProducts = filteredProducts.filter(product => {
-    const price = product.price;
-    return price >= minPrice && price <= maxPrice;
-  });
   
   // Apply brand filters
   if (searchParams.brands) {
@@ -184,6 +174,7 @@ export default async function ShopPage({
           </div>
         </div>
       </div>
+      <Footer showNewsletter={false} />
     </main>
   );
 }

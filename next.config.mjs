@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Fix for Prisma Client in Next.js
+      config.externals.push('@prisma/client');
+    }
+    return config;
+  },
   images: {
     remotePatterns: [
       {

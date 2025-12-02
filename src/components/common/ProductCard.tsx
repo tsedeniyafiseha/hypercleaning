@@ -27,7 +27,7 @@ const getBrand = (id: number): string => brands[id % brands.length];
 
 const ProductCard = ({ data }: ProductCardProps) => {
   const productUrl = `/shop/product/${data.id}/${data.title.split(" ").join("-")}`;
-  const productImage = getProductImage(data.id);
+  const productImage = data.srcUrl || getProductImage(data.id); // Use actual image URL from database
   const brand = getBrand(data.id);
 
   const discountedPrice = data.discount.percentage > 0
@@ -42,11 +42,15 @@ const ProductCard = ({ data }: ProductCardProps) => {
     <Link href={productUrl} className="group block">
       {/* Image */}
       <div className="relative bg-white aspect-square mb-4 overflow-hidden">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={productImage}
           alt={data.title}
-          fill
-          className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            // Fallback to placeholder if external image fails
+            (e.target as HTMLImageElement).src = getProductImage(data.id);
+          }}
         />
         {/* Wishlist */}
         <button className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors">

@@ -32,7 +32,7 @@ export default async function AdminDashboardPage() {
     take: 5,
     orderBy: { createdAt: "desc" },
     include: {
-      user: { select: { name: true, email: true } },
+      User: { select: { name: true, email: true } },
     },
   });
 
@@ -109,7 +109,7 @@ export default async function AdminDashboardPage() {
                   <div>
                     <p className="text-sm font-medium">Order #{order.id}</p>
                     <p className="text-xs text-black/60">
-                      {order.user?.name || order.user?.email || "Guest"}
+                      {order.User?.name || order.User?.email || "Guest"}
                     </p>
                   </div>
                   <div className="text-right">

@@ -15,7 +15,12 @@
     "prisma:studio": "prisma studio",
     "prisma:seed": "tsx prisma/seed.ts",
     "db:push": "prisma db push",
-    "db:migrate:deploy": "prisma migrate deploy"
+    "db:migrate:deploy": "prisma migrate deploy",
+    "test:db": "tsx scripts/test-db-connection.ts",
+    "check:db": "tsx scripts/check-prisma-connection.ts",
+    "switch:connection": "tsx scripts/switch-to-direct.ts",
+    "test:payment": "tsx scripts/test-payment-flow.ts",
+    "check:production": "tsx scripts/production-readiness-check.ts"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
@@ -31,8 +36,10 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@sentry/nextjs": "^8.0.0",
+    "@types/pg": "^8.15.6",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
+    "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.2.1",
     "framer-motion": "^11.5.4",
@@ -42,6 +49,7 @@
     "next": "14.2.7",
     "next-auth": "^4.24.7",
     "nodemailer": "^7.0.11",
+    "pg": "^8.16.3",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.3.0",

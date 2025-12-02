@@ -194,9 +194,27 @@ export const cartsSlice = createSlice({
           isItemInCart.quantity
         );
     },
+    clearCart: (state) => {
+      state.cart = null;
+      state.totalPrice = 0;
+      state.adjustedTotalPrice = 0;
+      state.action = null;
+    },
+    loadCart: (state, action: PayloadAction<Cart>) => {
+      state.cart = action.payload;
+      // Recalculate totals
+      state.totalPrice = action.payload.items.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      );
+      state.adjustedTotalPrice = action.payload.items.reduce(
+        (total, item) => total + calcAdjustedTotalPrice(0, item),
+        0
+      );
+    },
   },
 });
 
-export const { addToCart, removeCartItem, remove } = cartsSlice.actions;
+export const { addToCart, removeCartItem, remove, clearCart, loadCart } = cartsSlice.actions;
 
 export default cartsSlice.reducer;

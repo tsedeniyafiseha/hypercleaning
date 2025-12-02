@@ -35,7 +35,7 @@ const ReviewsContent = () => {
 
           <Button
             type="button"
-            className="sm:min-w-[166px] px-4 py-3 sm:px-5 sm:py-4 rounded-full bg-black hover:bg-gray-800 font-medium text-xs sm:text-base h-12"
+            className="sm:min-w-[166px] px-4 py-3 sm:px-5 sm:py-4 rounded-full bg-sky-500 hover:bg-sky-600 font-medium text-xs sm:text-base h-12"
           >
             Write a Review
           </Button>
@@ -49,7 +49,7 @@ const ReviewsContent = () => {
       <div className="w-full px-4 sm:px-0 text-center">
         <Link
           href="#"
-          className="inline-block w-[230px] px-11 py-4 border rounded-full hover:bg-black hover:text-white hover:border-black text-black transition-all font-medium text-sm sm:text-base border-black/10"
+          className="inline-block w-[230px] px-11 py-4 border rounded-full hover:bg-sky-500 hover:text-white hover:border-sky-500 text-black transition-all font-medium text-sm sm:text-base border-black/10"
         >
           Load More Reviews
         </Link>

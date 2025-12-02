@@ -46,17 +46,6 @@ const Sidebar = () => {
           Filters
         </h3>
 
-        <Section title="Price" defaultOpen>
-          <div className="space-y-2.5">
-            {["Under $25", "$25 - $50", "$50 - $100", "Over $100"].map((range, idx) => (
-              <label key={idx} className="flex items-center gap-2 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-sky-500 focus:ring-sky-500 cursor-pointer" />
-                <span className="text-sm text-gray-700 group-hover:text-gray-900 font-medium">{range}</span>
-              </label>
-            ))}
-          </div>
-        </Section>
-
         <Section title="Brand" defaultOpen>
           <div className="space-y-2.5">
             {brands.map((brand, idx) => (

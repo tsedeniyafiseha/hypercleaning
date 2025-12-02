@@ -82,7 +82,7 @@ export async function GET(request: Request) {
 
     const verificationToken = await prisma.verificationToken.findUnique({
       where: { token },
-      include: { user: true },
+      include: { User: true },
     });
 
     if (!verificationToken) {

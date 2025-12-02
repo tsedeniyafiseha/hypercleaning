@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendVerificationEmail } from "@/lib/email";
 import bcrypt from "bcryptjs";
-import crypto from "crypto";
-import { sanitizeObject } from "@/lib/validation";
+import { sanitizeObject, signupSchema } from "@/lib/validation";
 import { logger } from "@/lib/logger";
 
 export async function POST(request: Request) {
@@ -12,6 +10,7 @@ export async function POST(request: Request) {
     const sanitizedBody = sanitizeObject(rawBody);
     const { name, email, password } = sanitizedBody;
 
+    // Validate input
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -19,66 +18,79 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate with schema
+    const validation = signupSchema.safeParse({ name, email, password });
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: validation.error.errors[0].message },
+        { status: 400 }
+      );
+    }
+
+    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email: email.toLowerCase() },
+      select: { id: true, email: true },
     });
 
     if (existingUser) {
       return NextResponse.json(
         { error: "An account with this email already exists" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
-    const token = crypto.randomBytes(32).toString("hex");
-    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    // Hash password
+    const passwordHash = await bcrypt.hash(password, 12);
 
-    // Use transaction to ensure user and token are created together
-    const user = await prisma.$transaction(async (tx) => {
-      // Create user
-      const newUser = await tx.user.create({
-        data: {
-          name,
-          email,
-          passwordHash,
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      });
-
-      // Create verification token
-      await tx.verificationToken.create({
-        data: {
-          identifier: email,
-          token,
-          expires,
-          userId: newUser.id,
-        },
-      });
-
-      return newUser;
+    // Create user with auto-verification (no email verification needed)
+    const user = await prisma.user.create({
+      data: {
+        name: name.trim(),
+        email: email.toLowerCase(),
+        passwordHash,
+        role: "user",
+        emailVerified: new Date(), // Auto-verify on signup
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+      },
     });
 
-    // Send verification email
-    try {
-      await sendVerificationEmail(email, token);
-    } catch (emailError) {
-      logger.error("Failed to send verification email", emailError as Error, { email });
-      // Don't fail the signup if email fails
+    logger.info("User account created successfully", { userId: user.id, email: user.email });
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Account created successfully. You can now sign in.",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    logger.error("Failed to create user account", error as Error, {
+      endpoint: "POST /api/auth/signup",
+    });
+
+    // Handle specific database errors
+    if (error instanceof Error) {
+      if (error.message.includes("Unique constraint failed")) {
+        return NextResponse.json(
+          { error: "Email already registered" },
+          { status: 409 }
+        );
+      }
     }
 
-    return NextResponse.json({ 
-      user, 
-      message: "Account created successfully. Please check your email to verify your account." 
-    }, { status: 201 });
-  } catch (error) {
-    logger.error("Failed to create user account", error as Error, { endpoint: "POST /api/auth/signup" });
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: "Failed to create account. Please try again." },
       { status: 500 }
     );
   }

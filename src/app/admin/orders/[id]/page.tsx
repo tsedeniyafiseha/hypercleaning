@@ -108,7 +108,7 @@ export default function AdminOrderDetailPage() {
           <h1 className="text-2xl font-bold mb-4">Order Not Found</h1>
           <button
             onClick={() => router.push("/admin/orders")}
-            className="px-6 py-3 bg-black text-white rounded-full"
+            className="px-6 py-3 bg-sky-500 text-white rounded-full hover:bg-sky-600"
           >
             Back to Orders
           </button>
@@ -233,11 +233,11 @@ export default function AdminOrderDetailPage() {
             <div className="space-y-2 text-sm">
               <div>
                 <span className="text-black/60">Name:</span>
-                <p className="font-medium">{order.user?.name || "Guest"}</p>
+                <p className="font-medium">{order.User?.name || "Guest"}</p>
               </div>
               <div>
                 <span className="text-black/60">Email:</span>
-                <p className="font-medium">{order.user?.email || order.customerEmail || "N/A"}</p>
+                <p className="font-medium">{order.User?.email || order.customerEmail || "N/A"}</p>
               </div>
             </div>
           </div>
