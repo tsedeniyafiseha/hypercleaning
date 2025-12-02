@@ -233,11 +233,11 @@ export default function AdminOrderDetailPage() {
             <div className="space-y-2 text-sm">
               <div>
                 <span className="text-black/60">Name:</span>
-                <p className="font-medium">{order.User?.name || "Guest"}</p>
+                <p className="font-medium">{(order as any).User?.name || "Guest"}</p>
               </div>
               <div>
                 <span className="text-black/60">Email:</span>
-                <p className="font-medium">{order.User?.email || order.customerEmail || "N/A"}</p>
+                <p className="font-medium">{(order as any).User?.email || order.customerEmail || "N/A"}</p>
               </div>
             </div>
           </div>
