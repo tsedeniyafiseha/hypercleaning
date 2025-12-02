@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
         where: { id: existingItem.id },
         data: { quantity: existingItem.quantity + quantity },
         include: {
-          product: {
+          Product: {
             select: {
               id: true,
               title: true,
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
           attributes: attributes || null,
         },
         include: {
-          product: {
+          Product: {
             select: {
               id: true,
               title: true,
@@ -198,7 +198,7 @@ export async function PUT(request: NextRequest) {
       where: { id: cartItemId },
       data: { quantity },
       include: {
-        product: {
+        Product: {
           select: {
             id: true,
             title: true,

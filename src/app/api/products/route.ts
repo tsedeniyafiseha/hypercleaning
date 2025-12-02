@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       where.OR = [
         { title: { contains: search, mode: "insensitive" } },
         { description: { contains: search, mode: "insensitive" } },
-        { category: { name: { contains: search, mode: "insensitive" } } }
+        { Category: { name: { contains: search, mode: "insensitive" } } }
       ];
     }
 
@@ -46,8 +46,8 @@ export async function GET(request: NextRequest) {
       prisma.product.findMany({
         where,
         include: { 
-          category: true,
-          reviews: {
+          Category: true,
+          Review: {
             select: { rating: true }
           }
         },

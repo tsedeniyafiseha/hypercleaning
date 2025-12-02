@@ -10,7 +10,7 @@ export async function GET() {
         name: true,
         slug: true,
         _count: {
-          select: { products: true },
+          select: { Product: true },
         },
       },
       orderBy: { name: "asc" },

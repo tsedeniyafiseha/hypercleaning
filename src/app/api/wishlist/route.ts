@@ -22,7 +22,7 @@ export async function GET() {
     const wishlist = await prisma.wishlist.findMany({
       where: { userId: user.id },
       include: {
-        product: {
+        Product: {
           select: {
             id: true,
             title: true,
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
         productId: Number(productId),
       },
       include: {
-        product: {
+        Product: {
           select: {
             id: true,
             title: true,

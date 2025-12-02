@@ -5,6 +5,9 @@ const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000;
+
 // Simplified Prisma client for Next.js compatibility
 export const prisma =
   globalForPrisma.prisma ??
@@ -15,6 +18,17 @@ export const prisma =
 // Store in global to prevent multiple instances in development
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
+}
+
+// Test database connection
+async function testConnection(): Promise<boolean> {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return true;
+  } catch (error) {
+    logger.error("Database connection test failed", { error });
+    return false;
+  }
 }
 
 // Enhanced query with retry logic
