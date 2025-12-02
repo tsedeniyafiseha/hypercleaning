@@ -176,7 +176,7 @@ async function testDatabaseOrders() {
           id: o.id,
           status: o.status,
           total: o.totalAmount,
-          items: o.items.length,
+          items: o.OrderItem.length,
           createdAt: o.createdAt,
         })),
       },
