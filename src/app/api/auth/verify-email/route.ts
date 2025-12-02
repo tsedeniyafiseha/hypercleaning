@@ -45,6 +45,7 @@ export async function POST(request: Request) {
     // Create new verification token
     await prisma.verificationToken.create({
       data: {
+        id: crypto.randomUUID(),
         identifier: email,
         token,
         expires,
