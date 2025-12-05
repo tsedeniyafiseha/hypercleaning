@@ -37,6 +37,7 @@ export default function CheckoutPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isHydrated, setIsHydrated] = useState(false);
   const [formData, setFormData] = useState<ShippingFormData>({
     fullName: session?.user?.name || "",
     email: session?.user?.email || "",
@@ -49,12 +50,17 @@ export default function CheckoutPage() {
     country: "",
   });
 
-  // Redirect if no cart items
+  // Wait for Redux persist to hydrate before checking cart
   useEffect(() => {
-    if (!cart || cart.items.length === 0) {
+    setIsHydrated(true);
+  }, []);
+
+  // Redirect if no cart items (only after hydration)
+  useEffect(() => {
+    if (isHydrated && (!cart || cart.items.length === 0)) {
       router.push("/cart");
     }
-  }, [cart, router]);
+  }, [cart, router, isHydrated]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -157,6 +163,18 @@ export default function CheckoutPage() {
     }
   };
 
+  // Show loading while hydrating
+  if (!isHydrated) {
+    return (
+      <main className="pb-20">
+        <div className="max-w-frame mx-auto px-4 xl:px-0 py-20 text-center">
+          <p className="text-gray-500">Loading checkout...</p>
+        </div>
+      </main>
+    );
+  }
+
+  // Show nothing if redirecting
   if (!cart || cart.items.length === 0) {
     return null;
   }
