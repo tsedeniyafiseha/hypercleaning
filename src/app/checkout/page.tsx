@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks/redux";
 import { RootState } from "@/lib/store";
@@ -13,6 +12,7 @@ import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
 import Footer from "@/components/layout/Footer";
+import SpinnerbLoader from "@/components/ui/SpinnerbLoader";
 
 interface ShippingFormData {
   fullName: string;
@@ -27,8 +27,6 @@ interface ShippingFormData {
 }
 
 export default function CheckoutPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { cart, adjustedTotalPrice } = useAppSelector(
@@ -37,7 +35,7 @@ export default function CheckoutPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState<ShippingFormData>({
     fullName: session?.user?.name || "",
     email: session?.user?.email || "",
@@ -50,17 +48,10 @@ export default function CheckoutPage() {
     country: "",
   });
 
-  // Wait for Redux persist to hydrate before checking cart
+  // Wait for component to mount and Redux to hydrate
   useEffect(() => {
-    setIsHydrated(true);
+    setMounted(true);
   }, []);
-
-  // Redirect if no cart items (only after hydration)
-  useEffect(() => {
-    if (isHydrated && (!cart || cart.items.length === 0)) {
-      router.push("/cart");
-    }
-  }, [cart, router, isHydrated]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -164,19 +155,30 @@ export default function CheckoutPage() {
   };
 
   // Show loading while hydrating
-  if (!isHydrated) {
+  if (!mounted) {
     return (
       <main className="pb-20">
-        <div className="max-w-frame mx-auto px-4 xl:px-0 py-20 text-center">
-          <p className="text-gray-500">Loading checkout...</p>
+        <div className="max-w-frame mx-auto px-4 xl:px-0 py-20 flex justify-center items-center">
+          <SpinnerbLoader className="w-10 border-2 border-gray-300 border-r-gray-600" />
         </div>
       </main>
     );
   }
 
-  // Show nothing if redirecting
+  // Show empty cart message if no items after hydration
   if (!cart || cart.items.length === 0) {
-    return null;
+    return (
+      <main className="pb-20">
+        <div className="max-w-frame mx-auto px-4 xl:px-0 py-20 text-center">
+          <p className="text-gray-500 mb-4">Your cart is empty</p>
+          <Link href="/shop">
+            <Button className="bg-sky-500 hover:bg-sky-600 rounded-full">
+              Continue Shopping
+            </Button>
+          </Link>
+        </div>
+      </main>
+    );
   }
 
   return (

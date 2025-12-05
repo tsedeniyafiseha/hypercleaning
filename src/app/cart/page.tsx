@@ -13,10 +13,12 @@ import React, { useState } from "react";
 import { RootState } from "@/lib/store";
 import { useAppSelector } from "@/lib/hooks/redux";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { trackBeginCheckout } from "@/lib/analytics";
 import Footer from "@/components/layout/Footer";
 
 export default function CartPage() {
+  const router = useRouter();
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
     (state: RootState) => state.carts
   );
@@ -39,8 +41,8 @@ export default function CartPage() {
       adjustedTotalPrice
     );
 
-    // Navigate immediately
-    window.location.href = "/checkout";
+    // Navigate using Next.js router
+    router.push("/checkout");
   };
 
   return (
