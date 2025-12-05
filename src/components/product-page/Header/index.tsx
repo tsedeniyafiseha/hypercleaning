@@ -6,7 +6,6 @@ import { Product } from "@/types/product.types";
 import { integralCF } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 import Rating from "@/components/ui/Rating";
-import SizeSelection from "./SizeSelection";
 import AddToCardSection from "./AddToCardSection";
 import { trackViewItem } from "@/lib/analytics";
 
@@ -93,11 +92,6 @@ const Header = ({ data }: { data: Product }) => {
         </p>
         
         <hr className="border-t-gray-200 mb-6" />
-        
-        {/* Size Selection */}
-        <SizeSelection />
-        
-        <hr className="border-t-gray-200 my-6" />
         
         {/* Add to Cart */}
         <AddToCardSection data={data} />

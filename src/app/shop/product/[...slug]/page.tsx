@@ -1,9 +1,7 @@
-import ProductListSec from "@/components/common/ProductListSec";
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
-import Tabs from "@/components/product-page/Tabs";
 import { notFound } from "next/navigation";
-import { getAllProducts, getProductById, getRelatedProducts } from "@/lib/products";
+import { getProductById } from "@/lib/products";
 import type { Metadata } from "next";
 import Script from "next/script";
 
@@ -125,10 +123,6 @@ export default async function ProductPage({
     ],
   };
 
-  const relatedProducts =
-    (await getRelatedProducts(productData.id, 4)) ||
-    (await getAllProducts()).filter((p) => p.id !== productData.id).slice(0, 4);
-
   return (
     <main>
       <Script
@@ -147,10 +141,6 @@ export default async function ProductPage({
         <section className="mb-11">
           <Header data={productData} />
         </section>
-        <Tabs />
-      </div>
-      <div className="mb-[50px] sm:mb-20">
-        <ProductListSec title="You might also like" data={relatedProducts} />
       </div>
     </main>
   );

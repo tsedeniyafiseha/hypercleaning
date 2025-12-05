@@ -14,8 +14,6 @@ const categories = [
   { title: "Paper Products", slug: "paper-products" },
 ];
 
-const brands = ["Ecolab", "Clorox", "Lysol", "Mr. Clean"];
-
 type SectionProps = {
   title: string;
   defaultOpen?: boolean;
@@ -46,17 +44,6 @@ const Sidebar = () => {
           Filters
         </h3>
 
-        <Section title="Brand" defaultOpen>
-          <div className="space-y-2.5">
-            {brands.map((brand, idx) => (
-              <label key={idx} className="flex items-center gap-2 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-sky-500 focus:ring-sky-500 cursor-pointer" />
-                <span className="text-sm text-gray-700 group-hover:text-gray-900 font-medium">{brand}</span>
-              </label>
-            ))}
-          </div>
-        </Section>
-
         <Section title="Product Category" defaultOpen>
           <div className="space-y-1.5">
             {categories.map((category, idx) => (
@@ -83,12 +70,6 @@ const Sidebar = () => {
             </label>
           </div>
         </Section>
-
-        <div className="pt-4">
-          <button className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-lg transition-colors">
-            Apply Filters
-          </button>
-        </div>
       </div>
     </aside>
   );

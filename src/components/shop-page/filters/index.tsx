@@ -15,13 +15,6 @@ const categories = [
   { title: "Paper Products", slug: "paper-products", count: 14 },
 ];
 
-const brands = [
-  { name: "Ecolab", count: 15 },
-  { name: "Clorox", count: 12 },
-  { name: "Lysol", count: 18 },
-  { name: "Mr. Clean", count: 8 },
-];
-
 type FilterSectionProps = {
   title: string;
   defaultOpen?: boolean;
@@ -50,51 +43,9 @@ const FilterSection = ({ title, defaultOpen = true, children }: FilterSectionPro
 };
 
 const Filters = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [selectedBrands, setSelectedBrands] = React.useState<string[]>([]);
-
-  const handleBrandToggle = (brandName: string) => {
-    setSelectedBrands(prev => 
-      prev.includes(brandName) 
-        ? prev.filter(b => b !== brandName)
-        : [...prev, brandName]
-    );
-  };
-
-  const applyFilters = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    
-    // Add brand filters
-    if (selectedBrands.length > 0) {
-      params.set('brands', selectedBrands.join(','));
-    } else {
-      params.delete('brands');
-    }
-    
-    router.push(`/shop?${params.toString()}`);
-  };
-
   return (
     <div className="space-y-0">
-      <FilterSection title="Brand">
-        <div className="space-y-2">
-          {brands.map((brand, idx) => (
-            <label key={idx} className="flex items-center gap-2 cursor-pointer group">
-              <input 
-                type="checkbox" 
-                checked={selectedBrands.includes(brand.name)}
-                onChange={() => handleBrandToggle(brand.name)}
-                className="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500" 
-              />
-              <span className="text-sm text-gray-600 group-hover:text-black">{brand.name}</span>
-              <span className="text-xs text-gray-400 ml-auto">({brand.count})</span>
-            </label>
-          ))}
-        </div>
-      </FilterSection>
-
-      <FilterSection title="Product Category">
+      <FilterSection title="Product Category" defaultOpen>
         <div className="space-y-1">
           {categories.map((category, idx) => (
             <Link key={idx} href={`/shop/category/${category.slug}`} className="flex items-center justify-between py-1.5 text-sm text-gray-600 hover:text-black">
@@ -113,16 +64,6 @@ const Filters = () => {
           </label>
         </div>
       </FilterSection>
-
-      <div className="pt-4">
-        <button 
-          type="button" 
-          onClick={applyFilters}
-          className="w-full bg-yellow-500 hover:bg-yellow-600 text-black rounded-md py-3 text-sm font-semibold transition-colors"
-        >
-          Apply Filters
-        </button>
-      </div>
     </div>
   );
 };

@@ -47,7 +47,10 @@ export default function CartPage() {
         adjustedTotalPrice
       );
 
-      // Redirect to checkout page to collect shipping info
+      // Small delay to ensure Redux persist saves
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Use router for client-side navigation
       router.push("/checkout");
     } catch (err) {
       console.error(err);

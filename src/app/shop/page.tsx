@@ -32,7 +32,6 @@ export const metadata: Metadata = {
 };
 
 type SearchParams = {
-  brands?: string;
   sort?: string;
 };
 
@@ -44,13 +43,6 @@ export default async function ShopPage({
   const allProducts = await getAllProducts();
   
   let filteredProducts = allProducts;
-  
-  // Apply brand filters
-  if (searchParams.brands) {
-    const selectedBrands = searchParams.brands.toLowerCase().split(',');
-    // For now, we'll skip brand filtering since we don't have brand data in products
-    // In a real app, you'd filter by product.brand
-  }
   
   // Apply sorting
   if (searchParams.sort === 'low-price') {
