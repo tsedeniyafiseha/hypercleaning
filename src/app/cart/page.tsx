@@ -13,8 +13,6 @@ import React, { useState } from "react";
 import { RootState } from "@/lib/store";
 import { useAppSelector } from "@/lib/hooks/redux";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { trackBeginCheckout } from "@/lib/analytics";
 import Footer from "@/components/layout/Footer";
 
@@ -22,42 +20,27 @@ export default function CartPage() {
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
     (state: RootState) => state.carts
   );
-  const { data: session } = useSession();
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleCheckout = async () => {
-    setError("");
-
+  const handleCheckout = () => {
     if (!cart || cart.items.length === 0) {
       setError("Your cart is empty");
       return;
     }
 
-    try {
-      setLoading(true);
-      trackBeginCheckout(
-        cart.items.map((item) => ({
-          item_id: item.id,
-          item_name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        adjustedTotalPrice
-      );
+    // Track analytics
+    trackBeginCheckout(
+      cart.items.map((item) => ({
+        item_id: item.id,
+        item_name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      adjustedTotalPrice
+    );
 
-      // Small delay to ensure Redux persist saves
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      // Use router for client-side navigation
-      router.push("/checkout");
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    // Navigate immediately
+    window.location.href = "/checkout";
   };
 
   return (
@@ -146,10 +129,9 @@ export default function CartPage() {
                 <Button
                   type="button"
                   onClick={handleCheckout}
-                  disabled={loading}
-                  className="text-sm md:text-base font-medium bg-sky-500 hover:bg-sky-600 rounded-full w-full py-4 h-[54px] md:h-[60px] group disabled:opacity-60"
+                  className="text-sm md:text-base font-medium bg-sky-500 hover:bg-sky-600 rounded-full w-full py-4 h-[54px] md:h-[60px] group"
                 >
-                  {loading ? "Redirecting..." : "Go to Checkout"}{" "}
+                  Go to Checkout{" "}
                   <FaArrowRight className="text-xl ml-2 group-hover:translate-x-1 transition-all" />
                 </Button>
               </div>
