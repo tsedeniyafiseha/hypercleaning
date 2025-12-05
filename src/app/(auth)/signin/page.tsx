@@ -39,11 +39,22 @@ export default function SignInPage() {
       return;
     }
 
-    // Check if user is admin and redirect accordingly
-    const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "admin@localhost.com";
-    if (email.toLowerCase() === adminEmail.toLowerCase()) {
-      router.push("/admin");
-    } else {
+    // Fetch session to check if user is admin
+    try {
+      const response = await fetch("/api/auth/session");
+      const session = await response.json();
+      
+      // Check if user is admin by calling a verification endpoint
+      const adminCheckResponse = await fetch("/api/auth/check-admin");
+      const adminCheck = await adminCheckResponse.json();
+      
+      if (adminCheck.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Error checking admin status:", error);
       router.push("/");
     }
   };
