@@ -8,7 +8,7 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: [], // Don't persist cart - it should be user-specific from database
+  whitelist: ["carts"], // Persist cart state to localStorage
 };
 
 const rootReducer = combineReducers({
