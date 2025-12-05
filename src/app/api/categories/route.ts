@@ -5,13 +5,8 @@ import { logger } from "@/lib/logger";
 export async function GET() {
   try {
     const categories = await prisma.category.findMany({
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        _count: {
-          select: { Product: true },
-        },
+      include: {
+        _count: { select: { Product: true } },
       },
       orderBy: { name: "asc" },
     });

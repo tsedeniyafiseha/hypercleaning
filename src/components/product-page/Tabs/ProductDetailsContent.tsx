@@ -1,13 +1,24 @@
 import React from "react";
-import ProductDetails from "./ProductDetails";
 
 const ProductDetailsContent = () => {
   return (
     <section>
-      <h3 className="text-xl sm:text-2xl font-bold text-black mb-5 sm:mb-6">
-        Product specifications
-      </h3>
-      <ProductDetails />
+      <div className="text-gray-600 leading-relaxed space-y-4">
+        <p>
+          This professional cleaning product is designed to deliver exceptional results 
+          for commercial and residential cleaning needs. Formulated with high-quality 
+          ingredients, it provides effective cleaning power while being safe for various surfaces.
+        </p>
+        <p>
+          Our products meet industry standards and are trusted by cleaning professionals 
+          across New Zealand. Each item is carefully selected to ensure reliability, 
+          efficiency, and value for money.
+        </p>
+        <p>
+          For specific product details, ingredients, or usage instructions, please contact 
+          our customer service team who will be happy to assist you with any questions.
+        </p>
+      </div>
     </section>
   );
 };

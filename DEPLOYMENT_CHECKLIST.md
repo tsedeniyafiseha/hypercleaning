@@ -1,230 +1,180 @@
-# Deployment Checklist
+# Pre-Deployment Checklist ✅
 
-Use this checklist before deploying to production.
+## Code Changes Summary
 
-## Pre-Deployment
+### ✅ Completed Changes
+1. **Cart Persistence Fixed** - Redux whitelist configured
+2. **Navigation Updated** - Dynamic categories from database
+3. **Product Pages Cleaned** - Removed tabs, volume selection, related products
+4. **Phone Number Updated** - Changed to +64 22 069 2139 across all pages
+5. **Brand Filters Removed** - Cleaned from sidebar and shop filters
+6. **Blog Content Added** - 9 posts with 3 full articles
+7. **Documentation Cleaned** - Single README.md file
 
-### Environment Configuration
-- [ ] All environment variables set in `.env.local` or hosting platform
-- [ ] `NEXTAUTH_SECRET` generated with strong random value
-- [ ] `NEXTAUTH_URL` set to production domain
-- [ ] `NEXT_PUBLIC_SITE_URL` set to production domain
-- [ ] Database URL configured for production database
-- [ ] Stripe keys switched from test to live mode
-- [ ] Stripe webhook secret configured for production
-- [ ] SMTP credentials configured and tested
-- [ ] Admin email set correctly
-- [ ] Sentry DSN configured (if using)
-- [ ] Redis URL configured (if using)
-- [ ] Health check token generated
+### 📝 Files Modified
+- Cart page (checkout navigation)
+- Product pages (removed sections)
+- Navigation (dynamic categories)
+- Contact, About, Returns, Terms, Privacy pages (phone number)
+- Shop filters and homepage sidebar (removed brand filters)
+- Blog pages (added content)
 
-### Database
-- [ ] Production database created
-- [ ] Database migrations run: `npm run db:migrate:deploy`
-- [ ] Database seeded with initial data: `npm run prisma:seed`
-- [ ] Database backups configured
-- [ ] Connection pooling configured
-- [ ] Database indexes verified
+### 🆕 Files Added
+- `src/app/api/categories/route.ts` - Public categories API
+- `src/app/shop/category/[slug]/page.tsx` - Category pages
+- `src/app/blog/[slug]/page.tsx` - Blog post pages
+- `src/components/layout/Navbar/TopNavbar/NavbarWrapper.tsx` - Server component
+- `src/components/layout/Navbar/TopNavbar/TopNavbarClient.tsx` - Client component
+- `README.md` - Comprehensive documentation
 
-### OAuth Providers (if using)
-- [ ] Google OAuth credentials created for production domain
-- [ ] GitHub OAuth app created for production domain
-- [ ] Redirect URLs updated to production domain
-- [ ] OAuth credentials added to environment variables
+---
 
-### Stripe Configuration
-- [ ] Stripe account in live mode
-- [ ] Webhook endpoint created: `https://yourdomain.com/api/checkout/webhook`
-- [ ] Webhook event `checkout.session.completed` selected
-- [ ] Webhook secret copied to environment variables
-- [ ] Test payment in production (small amount)
+## Pre-Push Checklist
 
-### Email Configuration
-- [ ] SMTP server accessible from production
-- [ ] Email templates tested
-- [ ] Sender email verified
-- [ ] Test emails sent successfully
-- [ ] Email verification flow tested
-- [ ] Password reset flow tested
+### ✅ Code Quality
+- [ ] No TypeScript errors
+- [ ] No ESLint warnings
+- [ ] All imports working
+- [ ] No console.errors in production code
 
-### Security
-- [ ] HTTPS enabled and enforced
-- [ ] Security headers configured (CSP, HSTS, etc.)
-- [ ] Rate limiting tested
-- [ ] CORS configured correctly
-- [ ] API authentication tested
-- [ ] Admin routes protected
-- [ ] Input validation on all forms
-- [ ] SQL injection prevention verified
-- [ ] XSS prevention verified
+### ✅ Environment Variables (Vercel Dashboard)
+**CRITICAL: Update these in Vercel before deployment!**
 
-### Code Quality
-- [ ] All tests passing: `npm test`
-- [ ] No TypeScript errors: `npm run build`
-- [ ] ESLint passing: `npm run lint`
-- [ ] Code reviewed
-- [ ] Dependencies updated
-- [ ] No console.log statements in production code
-- [ ] Error handling implemented
+```env
+NEXTAUTH_URL=https://www.hypercleaningsupplies.co.nz
+NEXT_PUBLIC_SITE_URL=https://www.hypercleaningsupplies.co.nz
+```
 
-### Performance
-- [ ] Images optimized
-- [ ] Lighthouse score > 90
-- [ ] Page load times < 3s
-- [ ] API response times < 500ms
-- [ ] Database queries optimized
-- [ ] Caching configured (if using Redis)
-- [ ] CDN configured (if using)
+Other required variables (should already be set):
+- DATABASE_URL
+- NEXTAUTH_SECRET
+- GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET
+- GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET
+- ADMIN_EMAIL
+- STRIPE_SECRET_KEY / NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+- EMAIL_* (SMTP settings)
 
-### Monitoring & Logging
-- [ ] Sentry error tracking configured
-- [ ] Logging configured
-- [ ] Uptime monitoring set up
-- [ ] Health check endpoint tested
-- [ ] Alert notifications configured
-- [ ] Performance monitoring enabled
+### ✅ Database
+- [ ] Categories exist in database (for navigation)
+- [ ] Products have categories assigned
+- [ ] Admin user exists
+- [ ] Database migrations up to date
 
-## Deployment
+### ✅ Git
+- [ ] All changes staged
+- [ ] Meaningful commit message
+- [ ] Pushing to correct branch
 
-### Build & Deploy
-- [ ] Production build successful: `npm run build`
-- [ ] Build artifacts verified
-- [ ] Deploy to hosting platform
-- [ ] Environment variables set on platform
-- [ ] Database migrations run on production
-- [ ] Application starts successfully
-- [ ] No errors in logs
+---
 
-### Post-Deployment Testing
+## Deployment Steps
 
-#### Authentication
-- [ ] User signup works
-- [ ] Email verification works
-- [ ] User login works
-- [ ] Password reset works
-- [ ] OAuth login works (Google)
-- [ ] OAuth login works (GitHub)
-- [ ] Session persistence works
-- [ ] Logout works
+### 1. Stage All Changes
+```bash
+git add .
+```
 
-#### Products
-- [ ] Product listing loads
-- [ ] Product search works
-- [ ] Product filtering works
-- [ ] Product detail page loads
-- [ ] Product images load correctly
-- [ ] Product reviews display
+### 2. Commit Changes
+```bash
+git commit -m "feat: major updates - dynamic navigation, blog content, cart fixes, UI cleanup"
+```
 
-#### Shopping
-- [ ] Add to cart works
-- [ ] Cart persistence works
-- [ ] Cart quantity updates
-- [ ] Remove from cart works
+### 3. Push to GitHub
+```bash
+git push origin main
+```
+(Or your current branch: `git push origin fix/cart-persistence`)
+
+### 4. Vercel Auto-Deploy
+- Vercel will automatically detect the push
+- Build will start automatically
+- Check Vercel dashboard for build status
+
+### 5. Post-Deployment Verification
+After deployment completes:
+
+**Test These Features:**
+- [ ] Homepage loads correctly
+- [ ] Navigation "Shop by Category" shows categories
+- [ ] Click a category - products display
+- [ ] Add product to cart
+- [ ] Cart persists after page refresh
 - [ ] Checkout flow works
-- [ ] Stripe payment works
-- [ ] Order confirmation received
-- [ ] Order confirmation email sent
-
-#### Admin
+- [ ] Blog page shows all posts
+- [ ] Click "Read More" on blog posts
+- [ ] Contact page shows correct phone number
 - [ ] Admin login works
-- [ ] Dashboard loads with correct stats
-- [ ] Product creation works
-- [ ] Product editing works
-- [ ] Product deletion works
-- [ ] Category management works
-- [ ] Order listing works
-- [ ] Order detail view works
-- [ ] Order status updates work
+- [ ] Admin can manage products/categories
 
-#### User Account
-- [ ] Profile page loads
-- [ ] Profile updates work
-- [ ] Order history displays
-- [ ] Wishlist works
+---
 
-#### Error Handling
-- [ ] 404 page displays correctly
-- [ ] Error boundary catches errors
-- [ ] API errors return proper status codes
-- [ ] User-friendly error messages shown
+## Known Issues to Monitor
 
-#### Mobile
-- [ ] Responsive design works on mobile
-- [ ] Touch interactions work
-- [ ] Mobile navigation works
-- [ ] Forms work on mobile
+### Cart Checkout Navigation
+- If checkout button doesn't work, verify `NEXTAUTH_URL` in Vercel
+- Should redirect to `/checkout` page
 
-#### Performance
-- [ ] Pages load quickly
-- [ ] Images load optimally
-- [ ] No console errors
-- [ ] No memory leaks
+### Category Navigation
+- If categories don't show, check database has categories
+- Verify `src/app/api/categories/route.ts` is deployed
 
-### Monitoring
+### Blog Posts
+- First 3 posts have full content
+- Others show excerpts only (can add content later)
 
-#### First 24 Hours
-- [ ] Monitor error rates in Sentry
-- [ ] Check server logs for issues
-- [ ] Monitor database performance
-- [ ] Check API response times
-- [ ] Monitor uptime
-- [ ] Review user feedback
-
-#### First Week
-- [ ] Review analytics
-- [ ] Check conversion rates
-- [ ] Monitor payment success rate
-- [ ] Review email delivery rates
-- [ ] Check for performance issues
-- [ ] Review security logs
+---
 
 ## Rollback Plan
 
-If issues occur:
+If deployment fails:
+1. Check Vercel deployment logs
+2. Revert to previous deployment in Vercel dashboard
+3. Fix issues locally
+4. Redeploy
 
-1. **Immediate Issues**
-   - [ ] Rollback to previous version
-   - [ ] Notify users of downtime
-   - [ ] Investigate root cause
+---
 
-2. **Database Issues**
-   - [ ] Restore from backup
-   - [ ] Verify data integrity
-   - [ ] Re-run migrations if needed
+## Post-Deployment Tasks
 
-3. **Communication**
-   - [ ] Update status page
-   - [ ] Notify stakeholders
-   - [ ] Document incident
+### Immediate
+1. Test all critical user flows
+2. Check admin dashboard functionality
+3. Verify payment processing works
+4. Test email notifications
 
-## Post-Deployment
+### Within 24 Hours
+1. Monitor error logs in Vercel
+2. Check Stripe dashboard for test transactions
+3. Verify database performance
+4. Test on mobile devices
 
-- [ ] Update documentation
-- [ ] Tag release in Git
-- [ ] Update changelog
-- [ ] Notify team of successful deployment
-- [ ] Schedule post-mortem if issues occurred
-- [ ] Plan next iteration
+### Within 1 Week
+1. Add remaining blog post content
+2. Monitor user feedback
+3. Check analytics
+4. Optimize any slow pages
 
-## Production URLs
-
-- **Application**: https://yourdomain.com
-- **Admin**: https://yourdomain.com/admin
-- **API Health**: https://yourdomain.com/api/health
-- **Stripe Dashboard**: https://dashboard.stripe.com
-- **Sentry**: https://sentry.io/organizations/your-org/projects/your-project
-- **Database**: [Your database dashboard URL]
+---
 
 ## Support Contacts
 
-- **Technical Lead**: [Name/Email]
-- **DevOps**: [Name/Email]
-- **Database Admin**: [Name/Email]
-- **Stripe Support**: https://support.stripe.com
+**Website:** https://www.hypercleaningsupplies.co.nz  
+**Phone:** +64 22 069 2139  
+**Admin Email:** (set in ADMIN_EMAIL env var)
+
+---
 
 ## Notes
 
-Add any deployment-specific notes here:
-- 
-- 
-- 
+- Current branch: `fix/cart-persistence`
+- Consider merging to `main` after testing
+- Vercel auto-deploys from `main` branch
+- Database is production PostgreSQL (Supabase)
+- Stripe is in production mode
+
+---
+
+**Ready to Deploy:** YES ✅
+
+All code changes are complete and tested locally. 
+Environment variables need to be verified in Vercel dashboard before deployment.

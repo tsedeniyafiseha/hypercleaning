@@ -49,7 +49,7 @@ export default function AboutPage() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
               <p className="text-gray-600 leading-relaxed">
-                Have questions? Our team is here to help. Call us at <strong>08002 420 15</strong> or 
+                Have questions? Our team is here to help. Call us at <strong>+64 22 069 2139</strong> or 
                 visit our contact page to get in touch.
               </p>
             </section>
