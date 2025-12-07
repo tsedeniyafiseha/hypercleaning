@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🚀 Setting up admin user in production...\n');
   
-  const adminEmail = process.env.ADMIN_EMAIL || 'tsedeniyafisehaw@gmail.com';
+  const adminEmail = 'taranveerebu340@gmail.com';
   const adminPassword = 'Hyper@Clean2024$Secure!';
   
   console.log(`Admin Email: ${adminEmail}`);

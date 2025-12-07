@@ -42,6 +42,7 @@ next-env.d.ts
 
 # credentials and sensitive files
 ADMIN_CREDENTIALS.md
+ADMIN_LOGIN_CREDENTIALS.md
 *_CREDENTIALS.md
 
 git 
