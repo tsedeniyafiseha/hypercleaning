@@ -1,5 +1,4 @@
 import ProductListSec from "@/components/common/ProductListSec";
-import Brands from "@/components/homepage/Brands";
 import Header from "@/components/homepage/Header";
 import Sidebar from "@/components/homepage/Sidebar";
 import BrowseByCategory from "@/components/homepage/BrowseByCategory";
@@ -21,7 +20,6 @@ export default async function Home() {
       <AdminRedirect />
       <Header />
       <BrowseByCategory />
-      <Brands />
       
       {/* Main Content with Sidebar */}
       <div className="max-w-frame mx-auto px-4 xl:px-0 py-12">

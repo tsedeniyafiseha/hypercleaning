@@ -50,7 +50,7 @@ export default function ReturnsPage() {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">3. How to Initiate a Return</h2>
               <p className="text-gray-600 leading-relaxed mb-4">To initiate a return, please follow these steps:</p>
               <ol className="list-decimal list-inside text-gray-600 space-y-2">
-                <li>Contact our customer service team at info@hyperclean.co.nz or call +64 22 069 2139</li>
+                <li>Contact our customer service team at info@hyperclean.co.nz</li>
                 <li>Provide your order number and reason for return</li>
                 <li>Receive a Return Authorization (RA) number</li>
                 <li>Package the item securely in its original packaging</li>
@@ -150,7 +150,6 @@ export default function ReturnsPage() {
               </p>
               <p className="text-gray-600 leading-relaxed mt-2">
                 Email: info@hyperclean.co.nz<br />
-                Phone: +64 22 069 2139<br />
                 Business Hours: Monday-Friday 9:00 AM - 5:00 PM
               </p>
             </section>

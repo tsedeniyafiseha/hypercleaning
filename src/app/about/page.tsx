@@ -42,15 +42,14 @@ export default function AboutPage() {
                 <li>Competitive pricing and bulk discounts</li>
                 <li>Fast and reliable delivery</li>
                 <li>Expert customer support</li>
-                <li>Quality guaranteed products from trusted brands</li>
+                <li>Quality guaranteed products</li>
               </ul>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
               <p className="text-gray-600 leading-relaxed">
-                Have questions? Our team is here to help. Call us at <strong>+64 22 069 2139</strong> or 
-                visit our contact page to get in touch.
+                Have questions? Our team is here to help. Visit our contact page to get in touch.
               </p>
             </section>
           </div>

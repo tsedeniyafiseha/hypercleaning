@@ -43,19 +43,31 @@ export default function ContactForm() {
       if (response.ok && data.success) {
         setSubmitStatus({
           type: "success",
-          message: data.message || "Thank you for your message! We'll get back to you soon.",
+          message: data.message || "Thank you for your message! We'll get back to you within 24 hours.",
         });
         setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
-        setSubmitStatus({
-          type: "error",
-          message: data.error || "Failed to send message. Please try again.",
-        });
+        // Handle validation errors
+        if (data.errors && typeof data.errors === "object") {
+          const errorMessages = Object.entries(data.errors)
+            .map(([field, messages]) => `${field}: ${(messages as string[]).join(", ")}`)
+            .join("; ");
+          setSubmitStatus({
+            type: "error",
+            message: errorMessages,
+          });
+        } else {
+          setSubmitStatus({
+            type: "error",
+            message: data.error || "Failed to send message. Please try again.",
+          });
+        }
       }
     } catch (error) {
+      console.error("Contact form error:", error);
       setSubmitStatus({
         type: "error",
-        message: "An error occurred. Please try again later.",
+        message: "Network error. Please check your connection and try again.",
       });
     } finally {
       setIsSubmitting(false);

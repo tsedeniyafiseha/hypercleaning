@@ -128,8 +128,7 @@ export default function TermsPage() {
                 If you have any questions about these Terms of Service, please contact us at:
               </p>
               <p className="text-gray-600 leading-relaxed mt-2">
-                Email: info@hyperclean.co.nz<br />
-                Phone: +64 22 069 2139
+                Email: info@hyperclean.co.nz
               </p>
             </section>
           </div>

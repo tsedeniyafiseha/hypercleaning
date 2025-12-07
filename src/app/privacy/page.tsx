@@ -145,7 +145,6 @@ export default function PrivacyPage() {
               </p>
               <p className="text-gray-600 leading-relaxed mt-2">
                 Email: info@hyperclean.co.nz<br />
-                Phone: +64 22 069 2139<br />
                 Address: 123 Cleaning Street, Auckland, New Zealand
               </p>
             </section>
