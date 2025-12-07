@@ -40,8 +40,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const resetLink = `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password?token=${token}`;
-    await sendPasswordResetEmail(email, resetLink);
+    await sendPasswordResetEmail(email, token);
 
     return NextResponse.json({ 
       message: "If an account exists, a password reset link has been sent" 
