@@ -50,8 +50,7 @@ const TopNavbarClient = ({ categories }: TopNavbarProps) => {
       })),
     },
     { id: 2, type: "MenuItem", label: "About Us", url: "/about", children: [] },
-    { id: 3, type: "MenuItem", label: "Blog", url: "/blog", children: [] },
-    { id: 4, type: "MenuItem", label: "Contact", url: "/contact", children: [] },
+    { id: 3, type: "MenuItem", label: "Contact", url: "/contact", children: [] },
   ];
 
   return (
@@ -66,7 +65,7 @@ const TopNavbarClient = ({ categories }: TopNavbarProps) => {
             </div>
             <div className="hidden sm:block">
               <span className={cn([integralCF.className, "text-xl text-gray-800"])}>HYPER</span>
-              <span className="text-green-500 font-bold text-xl">CLEAN</span>
+              <span className="text-green-500 font-bold text-xl">CLEANING</span>
               <p className="text-[10px] text-gray-400 -mt-1">SUPPLIES</p>
             </div>
           </Link>

@@ -102,7 +102,12 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           <div className="flex flex-col w-full space-y-5">
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="flex items-center justify-between">
-                <h1 className="font-bold text-2xl md:text-[32px]">{category.name}</h1>
+                <div className="flex-1 min-w-0 overflow-hidden">
+                  <h1 className="font-bold text-2xl md:text-[32px]">{category.name}</h1>
+                  {(category as any).description && (
+                    <p className="text-gray-600 mt-2 max-w-2xl break-words whitespace-pre-wrap overflow-wrap-anywhere" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{(category as any).description}</p>
+                  )}
+                </div>
                 <MobileFilters />
               </div>
               <div className="flex flex-col sm:items-center sm:flex-row">
@@ -135,66 +140,44 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                 ))}
               </div>
             )}
-            <hr className="border-t-black/10" />
-            <Pagination className="justify-between">
-              <PaginationPrevious href="#" className="border border-black/10" />
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                    isActive
-                  >
-                    1
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    2
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem className="hidden lg:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    3
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis className="text-black/50 font-medium text-sm" />
-                </PaginationItem>
-                <PaginationItem className="hidden lg:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    8
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem className="hidden sm:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    9
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    10
-                  </PaginationLink>
-                </PaginationItem>
-              </PaginationContent>
-
-              <PaginationNext href="#" className="border border-black/10" />
-            </Pagination>
+            {/* Only show pagination if there are more products than shown */}
+            {totalProducts > 12 && (
+              <>
+                <hr className="border-t-black/10" />
+                <Pagination className="justify-between">
+                  <PaginationPrevious href="#" className="border border-black/10" />
+                  <PaginationContent>
+                    {Array.from({ length: Math.min(Math.ceil(totalProducts / 12), 5) }, (_, i) => (
+                      <PaginationItem key={i + 1}>
+                        <PaginationLink
+                          href="#"
+                          className="text-black/50 font-medium text-sm"
+                          isActive={i === 0}
+                        >
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    {Math.ceil(totalProducts / 12) > 5 && (
+                      <>
+                        <PaginationItem>
+                          <PaginationEllipsis className="text-black/50 font-medium text-sm" />
+                        </PaginationItem>
+                        <PaginationItem>
+                          <PaginationLink
+                            href="#"
+                            className="text-black/50 font-medium text-sm"
+                          >
+                            {Math.ceil(totalProducts / 12)}
+                          </PaginationLink>
+                        </PaginationItem>
+                      </>
+                    )}
+                  </PaginationContent>
+                  <PaginationNext href="#" className="border border-black/10" />
+                </Pagination>
+              </>
+            )}
           </div>
         </div>
       </div>

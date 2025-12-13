@@ -1,9 +1,10 @@
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import { notFound } from "next/navigation";
-import { getProductById } from "@/lib/products";
+import { getProductById, getRelatedProducts } from "@/lib/products";
 import type { Metadata } from "next";
 import Script from "next/script";
+import ProductCard from "@/components/common/ProductCard";
 
 export const dynamic = 'force-dynamic';
 
@@ -123,6 +124,9 @@ export default async function ProductPage({
     ],
   };
 
+  // Fetch related products
+  const relatedProducts = await getRelatedProducts(id, 4);
+
   return (
     <main>
       <Script
@@ -141,6 +145,20 @@ export default async function ProductPage({
         <section className="mb-11">
           <Header data={productData} />
         </section>
+
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <section className="mb-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">You May Also Like</h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+              {relatedProducts.map((product) => (
+                <ProductCard key={product.id} data={product} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </main>
   );

@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     const rawBody = await request.json();
     const body = sanitizeObject(rawBody);
 
-    const { name, slug } = body;
+    const { name, slug, description } = body;
 
     if (!name || !slug) {
       return NextResponse.json(
@@ -52,8 +52,11 @@ export async function POST(request: Request) {
       );
     }
 
+    const categoryData: any = { name, slug };
+    if (description) categoryData.description = description;
+    
     const category = await prisma.category.create({
-      data: { name, slug },
+      data: categoryData,
     });
 
     return NextResponse.json({ category }, { status: 201 });

@@ -8,7 +8,8 @@ interface Category {
   id: number;
   name: string;
   slug: string;
-  _count: { products: number };
+  description: string | null;
+  _count: { Product: number };
 }
 
 export default function AdminCategoriesPage() {
@@ -18,7 +19,7 @@ export default function AdminCategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [formData, setFormData] = useState({ name: "", slug: "" });
+  const [formData, setFormData] = useState({ name: "", slug: "", description: "" });
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function AdminCategoriesPage() {
       if (res.ok) {
         setShowForm(false);
         setEditingId(null);
-        setFormData({ name: "", slug: "" });
+        setFormData({ name: "", slug: "", description: "" });
         fetchCategories();
       } else {
         const data = await res.json();
@@ -77,7 +78,7 @@ export default function AdminCategoriesPage() {
 
   const handleEdit = (category: Category) => {
     setEditingId(category.id);
-    setFormData({ name: category.name, slug: category.slug });
+    setFormData({ name: category.name, slug: category.slug, description: category.description || "" });
     setShowForm(true);
   };
 
@@ -123,14 +124,14 @@ export default function AdminCategoriesPage() {
   }
 
   return (
-    <main className="max-w-frame mx-auto px-4 xl:px-0 py-10">
-      <div className="flex items-center justify-between mb-8">
+    <main className="max-w-frame mx-auto px-4 xl:px-0 py-10 overflow-x-hidden">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <h1 className="text-2xl md:text-3xl font-bold">Categories</h1>
         <button
           onClick={() => {
             setShowForm(true);
             setEditingId(null);
-            setFormData({ name: "", slug: "" });
+            setFormData({ name: "", slug: "", description: "" });
           }}
           className="px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-medium hover:bg-sky-600"
         >
@@ -157,6 +158,7 @@ export default function AdminCategoriesPage() {
                 value={formData.name}
                 onChange={(e) => {
                   setFormData({
+                    ...formData,
                     name: e.target.value,
                     slug: generateSlug(e.target.value),
                   });
@@ -175,6 +177,16 @@ export default function AdminCategoriesPage() {
                 className="w-full px-4 py-2 border border-black/10 rounded-lg"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Description</label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                rows={3}
+                placeholder="Enter category description (optional)"
+                className="w-full px-4 py-2 border border-black/10 rounded-lg resize-none"
+              />
+            </div>
             <div className="flex gap-2">
               <button
                 type="submit"
@@ -187,7 +199,7 @@ export default function AdminCategoriesPage() {
                 onClick={() => {
                   setShowForm(false);
                   setEditingId(null);
-                  setFormData({ name: "", slug: "" });
+                  setFormData({ name: "", slug: "", description: "" });
                 }}
                 className="px-4 py-2 border border-black/10 rounded-full text-sm"
               >
@@ -202,24 +214,27 @@ export default function AdminCategoriesPage() {
         {categories.map((category) => (
           <div
             key={category.id}
-            className="border border-black/10 rounded-2xl p-5 flex items-center justify-between"
+            className="border border-black/10 rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 overflow-hidden"
           >
-            <div>
-              <h3 className="font-semibold">{category.name}</h3>
-              <p className="text-sm text-black/60">
-                {category.slug} • {category._count.products} products
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold truncate">{category.name}</h3>
+              <p className="text-sm text-black/60 truncate">
+                {category.slug} • {category._count.Product} products
               </p>
+              {category.description && (
+                <p className="text-sm text-black/40 mt-1 line-clamp-2 break-all" style={{ wordBreak: 'break-all', overflowWrap: 'anywhere' }}>{category.description}</p>
+              )}
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-shrink-0">
               <button
                 onClick={() => handleEdit(category)}
-                className="px-4 py-2 border border-black/10 rounded-full text-sm hover:border-black/30"
+                className="px-3 md:px-4 py-2 border border-black/10 rounded-full text-sm hover:border-black/30"
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(category.id)}
-                className="px-4 py-2 border border-red-200 text-red-600 rounded-full text-sm hover:border-red-300"
+                className="px-3 md:px-4 py-2 border border-red-200 text-red-600 rounded-full text-sm hover:border-red-300"
               >
                 Delete
               </button>

@@ -1,135 +1,192 @@
 import type { Metadata } from "next";
 import Footer from "@/components/layout/Footer";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Hyper Cleaning Supplies",
-  description: "Terms of Service for Hyper Cleaning Supplies e-commerce platform.",
+  title: "Terms & Conditions | Hyper Cleaning",
+  description: "Read our terms and conditions for using Hyper Cleaning services and purchasing products.",
 };
 
 export default function TermsPage() {
   return (
     <main className="pb-20">
-      <div className="max-w-frame mx-auto px-4 xl:px-0">
-        <div className="py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Terms of Service</h1>
-          
-          <div className="prose max-w-none">
-            <p className="text-sm text-gray-500 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-sky-500 to-sky-600 py-16">
+        <div className="max-w-frame mx-auto px-4 xl:px-0">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Terms & Conditions</h1>
+          <p className="text-sky-100 text-lg max-w-2xl">
+            Please read these terms carefully before using our services or making a purchase.
+          </p>
+        </div>
+      </div>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">1. Agreement to Terms</h2>
-              <p className="text-gray-600 leading-relaxed">
-                By accessing or using Hyper Cleaning Supplies website and services, you agree to be bound by these Terms of Service. 
-                If you disagree with any part of these terms, you may not access our services.
-              </p>
+      <div className="max-w-frame mx-auto px-4 xl:px-0 py-12">
+        <div className="grid lg:grid-cols-4 gap-8">
+          {/* Sidebar Navigation */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 bg-gray-50 rounded-2xl p-6">
+              <h3 className="font-semibold text-gray-900 mb-4">Quick Navigation</h3>
+              <nav className="space-y-2">
+                {["Introduction", "Orders & Payment", "Pricing", "Delivery", "Returns", "Liability", "Contact"].map((item, idx) => (
+                  <a key={idx} href={`#section-${idx + 1}`} className="block text-sm text-gray-600 hover:text-sky-600 py-1 transition-colors">
+                    {idx + 1}. {item}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="lg:col-span-3 space-y-8">
+            <p className="text-sm text-gray-500 bg-sky-50 border border-sky-200 rounded-lg p-4">
+              <span className="font-semibold">Last updated:</span> December 2024
+            </p>
+
+            <section id="section-1" className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-sky-600 font-bold text-xl">1</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">Introduction</h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    Welcome to Hyper Cleaning Supplies. By accessing our website and purchasing our products, 
+                    you agree to be bound by these Terms and Conditions. We are committed to providing 
+                    high-quality cleaning supplies and materials for both commercial and residential use 
+                    in Christchurch.
+                  </p>
+                </div>
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">2. Use License</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Permission is granted to temporarily access the materials on Hyper Cleaning Supplies website for personal, 
-                non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
-              </p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>Modify or copy the materials</li>
-                <li>Use the materials for any commercial purpose or for any public display</li>
-                <li>Attempt to reverse engineer any software contained on the website</li>
-                <li>Remove any copyright or other proprietary notations from the materials</li>
-              </ul>
+            <section id="section-2" className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-sky-600 font-bold text-xl">2</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">Orders & Payment</h2>
+                  <ul className="space-y-3 text-gray-600">
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-sky-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>All orders are subject to availability and confirmation of the order price</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-sky-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>We accept Visa, Mastercard, PayPal, Apple Pay, and Google Pay</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-sky-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>Payment must be received in full before orders are dispatched</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-sky-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>Order confirmation will be sent to your registered email address</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">3. Products and Pricing</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                We strive to provide accurate product descriptions and pricing. However, we reserve the right to:
-              </p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>Correct any errors in pricing or product information</li>
-                <li>Refuse or cancel orders for products listed at incorrect prices</li>
-                <li>Limit quantities purchased per person or per order</li>
-                <li>Discontinue any product at any time</li>
-              </ul>
+            <section id="section-3" className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-sky-600 font-bold text-xl">3</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">Pricing</h2>
+                  <p className="text-gray-600 leading-relaxed mb-4">
+                    All prices displayed on our website are in New Zealand Dollars (NZD) and include GST 
+                    where applicable. We reserve the right to modify prices at any time without prior notice.
+                  </p>
+                  <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
+                    <p className="text-sky-800 text-sm">
+                      <strong>Note:</strong> Prices at checkout are final. Any promotional discounts will be 
+                      applied automatically if applicable.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">4. Orders and Payment</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                When you place an order, you are making an offer to purchase products. We reserve the right to accept or reject your order. 
-                Payment must be received before we ship your order. We accept payment via credit card through our secure payment processor.
-              </p>
+            <section id="section-4" className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-sky-600 font-bold text-xl">4</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">Delivery</h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    We deliver exclusively within the Christchurch area. Delivery times are estimates and may vary 
+                    based on location and product availability. We are not responsible for delays caused by 
+                    circumstances beyond our control.
+                  </p>
+                  <Link href="/delivery" className="inline-flex items-center gap-2 mt-4 text-sky-600 hover:text-sky-700 font-medium">
+                    View full delivery details
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">5. Shipping and Delivery</h2>
-              <p className="text-gray-600 leading-relaxed">
-                Shipping costs and delivery times are provided at checkout. We are not responsible for delays caused by shipping carriers 
-                or customs. Risk of loss and title for products pass to you upon delivery to the carrier.
-              </p>
+            <section id="section-5" className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-sky-600 font-bold text-xl">5</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">Returns & Refunds</h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    We want you to be completely satisfied with your purchase. If you're not happy, 
+                    please review our returns policy for information on how to return products.
+                  </p>
+                  <Link href="/returns" className="inline-flex items-center gap-2 mt-4 text-sky-600 hover:text-sky-700 font-medium">
+                    View returns policy
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">6. Returns and Refunds</h2>
-              <p className="text-gray-600 leading-relaxed">
-                Please see our Return Policy for detailed information about returns and refunds. We reserve the right to refuse returns 
-                that do not meet our return policy requirements.
-              </p>
+            <section id="section-6" className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-sky-600 font-bold text-xl">6</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">Limitation of Liability</h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    To the fullest extent permitted by New Zealand law, Hyper Cleaning Supplies shall not 
+                    be liable for any indirect, incidental, special, consequential, or punitive damages 
+                    arising from your use of our products or services.
+                  </p>
+                </div>
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">7. User Accounts</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur 
-                under your account. You agree to:
+            <section id="section-7" className="bg-gradient-to-r from-sky-500 to-sky-600 rounded-2xl p-8 text-white">
+              <h2 className="text-2xl font-semibold mb-4">Have Questions?</h2>
+              <p className="text-sky-100 mb-6">
+                If you have any questions about these Terms & Conditions, our team is here to help.
               </p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>Provide accurate and complete information when creating an account</li>
-                <li>Keep your account information updated</li>
-                <li>Notify us immediately of any unauthorized use of your account</li>
-                <li>Be responsible for all activities under your account</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">8. Prohibited Uses</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                You may not use our services:
-              </p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>For any unlawful purpose or to solicit others to perform unlawful acts</li>
-                <li>To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
-                <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</li>
-                <li>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate</li>
-                <li>To submit false or misleading information</li>
-                <li>To upload or transmit viruses or any other type of malicious code</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">9. Limitation of Liability</h2>
-              <p className="text-gray-600 leading-relaxed">
-                In no event shall Hyper Cleaning Supplies, its directors, employees, partners, agents, suppliers, or affiliates, 
-                be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, 
-                loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of our services.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">10. Changes to Terms</h2>
-              <p className="text-gray-600 leading-relaxed">
-                We reserve the right to modify these terms at any time. We will notify users of any material changes by posting 
-                the new Terms of Service on this page. Your continued use of our services after such changes constitutes acceptance 
-                of the new terms.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">11. Contact Information</h2>
-              <p className="text-gray-600 leading-relaxed">
-                If you have any questions about these Terms of Service, please contact us at:
-              </p>
-              <p className="text-gray-600 leading-relaxed mt-2">
-                Email: info@hyperclean.co.nz
-              </p>
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-sky-600 px-6 py-3 rounded-full font-medium hover:bg-sky-50 transition-colors">
+                Contact Us
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
             </section>
           </div>
         </div>
@@ -138,4 +195,3 @@ export default function TermsPage() {
     </main>
   );
 }
-

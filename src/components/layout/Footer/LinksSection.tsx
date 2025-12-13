@@ -1,7 +1,6 @@
 import React from "react";
 import { FooterLinks } from "./footer.types";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 const footerLinksData: FooterLinks[] = [
   {
@@ -10,23 +9,18 @@ const footerLinksData: FooterLinks[] = [
     children: [
       {
         id: 11,
-        label: "about",
-        url: "#",
+        label: "About Us",
+        url: "/about",
       },
       {
         id: 12,
-        label: "features",
-        url: "#",
+        label: "Contact",
+        url: "/contact",
       },
       {
         id: 13,
-        label: "works",
-        url: "#",
-      },
-      {
-        id: 14,
-        label: "career",
-        url: "#",
+        label: "Blog",
+        url: "/blog",
       },
     ],
   },
@@ -36,23 +30,18 @@ const footerLinksData: FooterLinks[] = [
     children: [
       {
         id: 21,
-        label: "customer support",
-        url: "#",
+        label: "Customer Support",
+        url: "/contact",
       },
       {
         id: 22,
-        label: "delivery details",
-        url: "#",
+        label: "Terms & Conditions",
+        url: "/terms",
       },
       {
         id: 23,
-        label: "terms & conditions",
-        url: "#",
-      },
-      {
-        id: 24,
-        label: "privacy policy",
-        url: "#",
+        label: "Privacy Policy",
+        url: "/privacy",
       },
     ],
   },
@@ -62,49 +51,49 @@ const footerLinksData: FooterLinks[] = [
     children: [
       {
         id: 31,
-        label: "account",
-        url: "#",
+        label: "Account",
+        url: "/faq#account",
       },
       {
         id: 32,
-        label: "manage deliveries",
-        url: "#",
+        label: "Manage Deliveries",
+        url: "/faq#deliveries",
       },
       {
         id: 33,
-        label: "orders",
-        url: "#",
+        label: "Orders",
+        url: "/faq#orders",
       },
       {
         id: 34,
-        label: "payments",
-        url: "#",
+        label: "Payments",
+        url: "/faq#payments",
       },
     ],
   },
   {
     id: 4,
-    title: "resources",
+    title: "shop",
     children: [
       {
         id: 41,
-        label: "Free eBooks",
-        url: "#",
+        label: "All Products",
+        url: "/shop",
       },
       {
         id: 42,
-        label: "development tutorial",
-        url: "#",
+        label: "New Arrivals",
+        url: "/shop#new-arrivals",
       },
       {
         id: 43,
-        label: "How to - Blog",
-        url: "#",
+        label: "Top Selling",
+        url: "/shop#top-selling",
       },
       {
         id: 44,
-        label: "youtube playlist",
-        url: "#",
+        label: "Returns",
+        url: "/returns",
       },
     ],
   },
@@ -122,10 +111,7 @@ const LinksSection = () => {
             <Link
               href={link.url}
               key={link.id}
-              className={cn([
-                link.id !== 41 && link.id !== 43 && "capitalize",
-                "text-black/60 text-sm md:text-base mb-4 w-fit",
-              ])}
+              className="text-black/60 text-sm md:text-base mb-4 w-fit hover:text-black transition-colors"
             >
               {link.label}
             </Link>

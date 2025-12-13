@@ -1,153 +1,213 @@
 import type { Metadata } from "next";
 import Footer from "@/components/layout/Footer";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Hyper Cleaning Supplies",
-  description: "Privacy Policy for Hyper Cleaning Supplies e-commerce platform.",
+  title: "Privacy Policy | Hyper Cleaning",
+  description: "Learn how Hyper Cleaning collects, uses, and protects your personal information.",
 };
 
 export default function PrivacyPage() {
   return (
     <main className="pb-20">
-      <div className="max-w-frame mx-auto px-4 xl:px-0">
-        <div className="py-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Privacy Policy</h1>
-          
-          <div className="prose max-w-none">
-            <p className="text-sm text-gray-500 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-sky-500 to-sky-600 py-16">
+        <div className="max-w-frame mx-auto px-4 xl:px-0">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Privacy Policy</h1>
+          <p className="text-sky-100 text-lg max-w-2xl">
+            Your privacy matters to us. Learn how we protect and handle your personal information.
+          </p>
+        </div>
+      </div>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">1. Introduction</h2>
-              <p className="text-gray-600 leading-relaxed">
-                Hyper Cleaning Supplies ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy 
-                explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
+      <div className="max-w-frame mx-auto px-4 xl:px-0 py-12">
+        {/* Trust Badges */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {[
+            { icon: "🔒", title: "Secure Data", desc: "256-bit encryption" },
+            { icon: "🛡️", title: "Protected", desc: "GDPR compliant" },
+            { icon: "🚫", title: "No Spam", desc: "We never sell data" },
+            { icon: "✅", title: "Transparent", desc: "Clear policies" },
+          ].map((badge, idx) => (
+            <div key={idx} className="bg-white rounded-xl border border-gray-100 p-4 text-center shadow-sm">
+              <span className="text-3xl mb-2 block">{badge.icon}</span>
+              <h3 className="font-semibold text-gray-900">{badge.title}</h3>
+              <p className="text-sm text-gray-500">{badge.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            <div className="bg-sky-50 border border-sky-200 rounded-xl p-4">
+              <p className="text-sm text-sky-800">
+                <span className="font-semibold">Last updated:</span> December 2024
               </p>
+            </div>
+
+            <section className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-gray-900">Information We Collect</h2>
+              </div>
+              <p className="text-gray-600 mb-4">We collect information you provide directly to us when you:</p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {[
+                  "Create an account",
+                  "Make a purchase",
+                  "Subscribe to newsletter",
+                  "Contact customer support",
+                  "Leave a product review",
+                  "Participate in promotions",
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 bg-gray-50 rounded-lg p-3">
+                    <svg className="w-4 h-4 text-sky-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-gray-700">{item}</span>
+                  </div>
+                ))}
+              </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">2. Information We Collect</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">We collect information that you provide directly to us, including:</p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li><strong>Personal Information:</strong> Name, email address, phone number, shipping address, billing address</li>
-                <li><strong>Account Information:</strong> Username, password, profile information</li>
-                <li><strong>Payment Information:</strong> Credit card details (processed securely through our payment processor)</li>
-                <li><strong>Order Information:</strong> Purchase history, product preferences</li>
-                <li><strong>Communication Data:</strong> Messages sent through our contact form or customer service</li>
+            <section className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-gray-900">How We Use Your Information</h2>
+              </div>
+              <div className="space-y-4">
+                {[
+                  { title: "Process Orders", desc: "To fulfill and deliver your purchases" },
+                  { title: "Communication", desc: "Send order updates and respond to inquiries" },
+                  { title: "Personalization", desc: "Customize your shopping experience" },
+                  { title: "Improvement", desc: "Enhance our products and services" },
+                  { title: "Security", desc: "Protect against fraud and unauthorized access" },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                    <div className="w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                      <p className="text-sm text-gray-600">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-gray-900">Data Security</h2>
+              </div>
+              <p className="text-gray-600 mb-4">
+                We implement industry-standard security measures to protect your personal information:
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
+                  <h3 className="font-semibold text-gray-900 mb-2">🔐 Encryption</h3>
+                  <p className="text-sm text-gray-600">All data transmitted using SSL/TLS encryption</p>
+                </div>
+                <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
+                  <h3 className="font-semibold text-gray-900 mb-2">🛡️ Secure Payments</h3>
+                  <p className="text-sm text-gray-600">PCI-DSS compliant payment processing</p>
+                </div>
+                <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
+                  <h3 className="font-semibold text-gray-900 mb-2">🔍 Monitoring</h3>
+                  <p className="text-sm text-gray-600">24/7 security monitoring and threat detection</p>
+                </div>
+                <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
+                  <h3 className="font-semibold text-gray-900 mb-2">📋 Access Control</h3>
+                  <p className="text-sm text-gray-600">Strict employee access policies</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-semibold text-gray-900">Your Rights</h2>
+              </div>
+              <p className="text-gray-600 mb-4">You have the right to:</p>
+              <ul className="space-y-3">
+                {[
+                  "Access your personal information",
+                  "Correct inaccurate data",
+                  "Request deletion of your data",
+                  "Opt-out of marketing communications",
+                  "Export your data in a portable format",
+                ].map((right, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-gray-700">
+                    <span className="w-6 h-6 bg-sky-100 rounded-full flex items-center justify-center">
+                      <svg className="w-3 h-3 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </span>
+                    {right}
+                  </li>
+                ))}
               </ul>
-              <p className="text-gray-600 leading-relaxed mt-4 mb-4">We also automatically collect certain information when you visit our website:</p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li><strong>Usage Data:</strong> Pages visited, time spent on pages, click patterns</li>
-                <li><strong>Device Information:</strong> IP address, browser type, operating system</li>
-                <li><strong>Cookies:</strong> Small data files stored on your device (see Cookie Policy below)</li>
-              </ul>
             </section>
+          </div>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">3. How We Use Your Information</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">We use the information we collect to:</p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>Process and fulfill your orders</li>
-                <li>Send you order confirmations and shipping updates</li>
-                <li>Respond to your inquiries and provide customer support</li>
-                <li>Send you marketing communications (with your consent)</li>
-                <li>Improve our website and services</li>
-                <li>Detect and prevent fraud</li>
-                <li>Comply with legal obligations</li>
-                <li>Personalize your shopping experience</li>
-              </ul>
-            </section>
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <div className="bg-gradient-to-br from-sky-500 to-sky-600 rounded-2xl p-6 text-white">
+                <h3 className="font-semibold text-lg mb-3">Questions About Privacy?</h3>
+                <p className="text-sky-100 text-sm mb-4">
+                  Our team is here to help with any privacy-related concerns.
+                </p>
+                <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-sky-600 px-4 py-2 rounded-full text-sm font-medium hover:bg-sky-50 transition-colors">
+                  Contact Us
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">4. Information Sharing and Disclosure</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">We do not sell your personal information. We may share your information with:</p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li><strong>Service Providers:</strong> Payment processors, shipping carriers, email service providers</li>
-                <li><strong>Business Partners:</strong> Trusted partners who assist in operating our website (under strict confidentiality agreements)</li>
-                <li><strong>Legal Requirements:</strong> When required by law or to protect our rights and safety</li>
-                <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">5. Data Security</h2>
-              <p className="text-gray-600 leading-relaxed">
-                We implement appropriate technical and organizational security measures to protect your personal information against 
-                unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet 
-                or electronic storage is 100% secure, and we cannot guarantee absolute security.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">6. Cookies and Tracking Technologies</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                We use cookies and similar tracking technologies to track activity on our website and store certain information. 
-                You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you 
-                do not accept cookies, you may not be able to use some portions of our website.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Types of cookies we use:
-              </p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li><strong>Essential Cookies:</strong> Required for the website to function properly</li>
-                <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website</li>
-                <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
-                <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements</li>
-              </ul>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">7. Your Rights</h2>
-              <p className="text-gray-600 leading-relaxed mb-4">You have the right to:</p>
-              <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>Access your personal information</li>
-                <li>Correct inaccurate or incomplete information</li>
-                <li>Request deletion of your personal information</li>
-                <li>Object to processing of your personal information</li>
-                <li>Request restriction of processing</li>
-                <li>Data portability</li>
-                <li>Withdraw consent at any time</li>
-              </ul>
-              <p className="text-gray-600 leading-relaxed mt-4">
-                To exercise these rights, please contact us using the information provided below.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">8. Data Retention</h2>
-              <p className="text-gray-600 leading-relaxed">
-                We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, 
-                unless a longer retention period is required or permitted by law. When we no longer need your information, we will 
-                securely delete or anonymize it.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">9. Children's Privacy</h2>
-              <p className="text-gray-600 leading-relaxed">
-                Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information 
-                from children. If you are a parent or guardian and believe your child has provided us with personal information, 
-                please contact us immediately.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">10. Changes to This Privacy Policy</h2>
-              <p className="text-gray-600 leading-relaxed">
-                We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy 
-                on this page and updating the "Last updated" date. You are advised to review this Privacy Policy periodically for any changes.
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">11. Contact Us</h2>
-              <p className="text-gray-600 leading-relaxed">
-                If you have any questions about this Privacy Policy, please contact us at:
-              </p>
-              <p className="text-gray-600 leading-relaxed mt-2">
-                Email: info@hyperclean.co.nz<br />
-                Address: 123 Cleaning Street, Auckland, New Zealand
-              </p>
-            </section>
+              <div className="bg-gray-50 rounded-2xl p-6">
+                <h3 className="font-semibold text-gray-900 mb-4">Related Pages</h3>
+                <nav className="space-y-2">
+                  <Link href="/terms" className="flex items-center gap-2 text-gray-600 hover:text-sky-600 py-2 transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Terms & Conditions
+                  </Link>
+                  <Link href="/returns" className="flex items-center gap-2 text-gray-600 hover:text-sky-600 py-2 transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" />
+                    </svg>
+                    Returns Policy
+                  </Link>
+                  <Link href="/faq" className="flex items-center gap-2 text-gray-600 hover:text-sky-600 py-2 transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    FAQ
+                  </Link>
+                </nav>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -155,4 +215,3 @@ export default function PrivacyPage() {
     </main>
   );
 }
-

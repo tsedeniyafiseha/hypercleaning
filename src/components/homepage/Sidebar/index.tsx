@@ -1,18 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
-const categories = [
-  { title: "Cleaning Chemicals", slug: "cleaning-chemicals" },
-  { title: "Bathroom Care", slug: "bathroom-care" },
-  { title: "Kitchen Care", slug: "kitchen-care" },
-  { title: "Floor Care", slug: "floor-care" },
-  { title: "Dispensers", slug: "dispensers" },
-  { title: "Gloves & PPE", slug: "gloves" },
-  { title: "Paper Products", slug: "paper-products" },
-];
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  _count: { Product: number };
+};
 
 type SectionProps = {
   title: string;
@@ -34,6 +31,26 @@ const Section = ({ title, defaultOpen = false, children }: SectionProps) => {
 };
 
 const Sidebar = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/categories");
+        if (res.ok) {
+          const data = await res.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <aside className="w-full lg:w-64 flex-shrink-0">
       <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-5 sticky top-24">
@@ -46,15 +63,25 @@ const Sidebar = () => {
 
         <Section title="Product Category" defaultOpen>
           <div className="space-y-1.5">
-            {categories.map((category, idx) => (
-              <Link
-                key={idx}
-                href={`/shop/category/${category.slug}`}
-                className="block py-2 text-sm text-gray-700 hover:text-sky-600 font-medium transition-colors hover:pl-2"
-              >
-                {category.title}
-              </Link>
-            ))}
+            {loading ? (
+              <div className="space-y-2">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="h-6 bg-gray-100 rounded animate-pulse" />
+                ))}
+              </div>
+            ) : categories.length > 0 ? (
+              categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/shop/category/${category.slug}`}
+                  className="block py-2 text-sm text-gray-700 hover:text-sky-600 font-medium transition-colors hover:pl-2"
+                >
+                  {category.name}
+                </Link>
+              ))
+            ) : (
+              <p className="text-sm text-gray-400">No categories available</p>
+            )}
           </div>
         </Section>
 

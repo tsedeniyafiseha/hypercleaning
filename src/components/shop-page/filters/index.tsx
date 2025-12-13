@@ -1,19 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
-const categories = [
-  { title: "Cleaning Chemicals", slug: "cleaning-chemicals", count: 24 },
-  { title: "Bathroom Care", slug: "bathroom-care", count: 18 },
-  { title: "Kitchen Care", slug: "kitchen-care", count: 15 },
-  { title: "Floor Care", slug: "floor-care", count: 12 },
-  { title: "Dispensers", slug: "dispensers", count: 10 },
-  { title: "Gloves & PPE", slug: "gloves", count: 22 },
-  { title: "Paper Products", slug: "paper-products", count: 14 },
-];
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  _count: { Product: number };
+};
 
 type FilterSectionProps = {
   title: string;
@@ -43,16 +39,50 @@ const FilterSection = ({ title, defaultOpen = true, children }: FilterSectionPro
 };
 
 const Filters = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/categories");
+        if (res.ok) {
+          const data = await res.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <div className="space-y-0">
       <FilterSection title="Product Category" defaultOpen>
         <div className="space-y-1">
-          {categories.map((category, idx) => (
-            <Link key={idx} href={`/shop/category/${category.slug}`} className="flex items-center justify-between py-1.5 text-sm text-gray-600 hover:text-black">
-              <span>{category.title}</span>
-              <span className="text-xs text-gray-400">({category.count})</span>
-            </Link>
-          ))}
+          {loading ? (
+            <div className="space-y-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-6 bg-gray-100 rounded animate-pulse" />
+              ))}
+            </div>
+          ) : categories.length > 0 ? (
+            categories.map((category) => (
+              <Link 
+                key={category.id} 
+                href={`/shop/category/${category.slug}`} 
+                className="flex items-center justify-between py-1.5 text-sm text-gray-600 hover:text-black"
+              >
+                <span>{category.name}</span>
+                <span className="text-xs text-gray-400">({category._count.Product})</span>
+              </Link>
+            ))
+          ) : (
+            <p className="text-sm text-gray-400">No categories available</p>
+          )}
         </div>
       </FilterSection>
 

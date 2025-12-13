@@ -103,66 +103,44 @@ export default async function ShopPage({
                 ))}
               </div>
             )}
-            <hr className="border-t-black/10" />
-            <Pagination className="justify-between">
-              <PaginationPrevious href="#" className="border border-black/10" />
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                    isActive
-                  >
-                    1
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    2
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem className="hidden lg:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    3
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis className="text-black/50 font-medium text-sm" />
-                </PaginationItem>
-                <PaginationItem className="hidden lg:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    8
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem className="hidden sm:block">
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    9
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink
-                    href="#"
-                    className="text-black/50 font-medium text-sm"
-                  >
-                    10
-                  </PaginationLink>
-                </PaginationItem>
-              </PaginationContent>
-
-              <PaginationNext href="#" className="border border-black/10" />
-            </Pagination>
+            {/* Only show pagination if there are more products than shown */}
+            {totalProducts > 12 && (
+              <>
+                <hr className="border-t-black/10" />
+                <Pagination className="justify-between">
+                  <PaginationPrevious href="#" className="border border-black/10" />
+                  <PaginationContent>
+                    {Array.from({ length: Math.min(Math.ceil(totalProducts / 12), 5) }, (_, i) => (
+                      <PaginationItem key={i + 1}>
+                        <PaginationLink
+                          href="#"
+                          className="text-black/50 font-medium text-sm"
+                          isActive={i === 0}
+                        >
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+                    {Math.ceil(totalProducts / 12) > 5 && (
+                      <>
+                        <PaginationItem>
+                          <PaginationEllipsis className="text-black/50 font-medium text-sm" />
+                        </PaginationItem>
+                        <PaginationItem>
+                          <PaginationLink
+                            href="#"
+                            className="text-black/50 font-medium text-sm"
+                          >
+                            {Math.ceil(totalProducts / 12)}
+                          </PaginationLink>
+                        </PaginationItem>
+                      </>
+                    )}
+                  </PaginationContent>
+                  <PaginationNext href="#" className="border border-black/10" />
+                </Pagination>
+              </>
+            )}
           </div>
         </div>
       </div>

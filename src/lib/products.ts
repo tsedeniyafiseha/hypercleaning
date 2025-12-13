@@ -47,7 +47,8 @@ export async function getRelatedProducts(
 
   if (!product) return [];
 
-  const related = await prisma.product.findMany({
+  // First try to get products from the same category
+  let related = await prisma.product.findMany({
     where: {
       id: { not: productId },
       ...(product.categoryId && { categoryId: product.categoryId }),
@@ -55,6 +56,24 @@ export async function getRelatedProducts(
     take: limit,
     orderBy: { createdAt: "desc" },
   });
+
+  // If not enough products in same category, get random products from other categories
+  if (related.length < limit) {
+    const existingIds = [productId, ...related.map(p => p.id)];
+    const additionalNeeded = limit - related.length;
+    
+    // Get random products from any category (excluding current product and already selected)
+    const additionalProducts = await prisma.product.findMany({
+      where: {
+        id: { notIn: existingIds },
+      },
+      take: additionalNeeded * 3, // Get more to shuffle from
+    });
+
+    // Shuffle and take what we need
+    const shuffled = additionalProducts.sort(() => Math.random() - 0.5);
+    related = [...related, ...shuffled.slice(0, additionalNeeded)];
+  }
 
   return related.map(mapDbProductToUi);
 }

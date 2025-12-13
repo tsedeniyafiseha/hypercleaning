@@ -52,7 +52,7 @@ export async function PUT(
     const categoryId = parseInt(params.id);
     const rawBody = await request.json();
     const body = sanitizeObject(rawBody);
-    const { name, slug } = body;
+    const { name, slug, description } = body;
 
     if (!name || !slug) {
       return NextResponse.json(
@@ -61,9 +61,12 @@ export async function PUT(
       );
     }
 
+    const updateData: any = { name, slug };
+    if (description !== undefined) updateData.description = description || null;
+    
     const updated = await prisma.category.update({
       where: { id: categoryId },
-      data: { name, slug },
+      data: updateData,
     });
 
     return NextResponse.json(updated);

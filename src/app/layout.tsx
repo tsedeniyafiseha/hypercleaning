@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 import { satoshi } from "@/styles/fonts";
+import Script from "next/script";
 
 import TopBanner from "@/components/layout/Banner/TopBanner";
 import NavbarWrapper from "@/components/layout/Navbar/TopNavbar/NavbarWrapper";
 import HolyLoader from "holy-loader";
 import Providers from "./providers";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { organizationSchema } from "@/lib/seo";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -37,6 +39,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -46,6 +50,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body className={satoshi.className}>
         <HolyLoader color="#868686" />
         <TopBanner />
