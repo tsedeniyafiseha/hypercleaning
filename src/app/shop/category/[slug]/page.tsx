@@ -104,9 +104,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               <div className="flex items-center justify-between">
                 <div className="flex-1 min-w-0 overflow-hidden">
                   <h1 className="font-bold text-2xl md:text-[32px]">{category.name}</h1>
-                  {(category as any).description && (
-                    <p className="text-gray-600 mt-2 max-w-2xl break-words whitespace-pre-wrap overflow-wrap-anywhere" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{(category as any).description}</p>
-                  )}
                 </div>
                 <MobileFilters />
               </div>
@@ -138,6 +135,11 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                 {productsToShow.map((product) => (
                   <ProductCard key={product.id} data={product} />
                 ))}
+              </div>
+            )}
+            {(category as any).description && (
+              <div className="mt-8 pt-8 border-t border-black/10">
+                <p className="text-gray-600 max-w-2xl break-words whitespace-pre-wrap overflow-wrap-anywhere" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{(category as any).description}</p>
               </div>
             )}
             {/* Only show pagination if there are more products than shown */}
